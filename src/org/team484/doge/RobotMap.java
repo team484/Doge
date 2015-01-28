@@ -17,36 +17,40 @@ public class RobotMap {
     // public static int rangefinderModule = 1;
 	
 	//----------Drive Motors----------
-	public static int frontLeftMotor = 0;
-	public static int rearLeftMotor = 1;
-	public static int frontRightMotor = 2;
-	public static int rearRightMotor = 3;
+	public static int frontLeftMotor = 0; //Talon that controls front left motor
+	public static int rearLeftMotor = 1; //Talon that controls back left motor
+	public static int frontRightMotor = 2; //Talon that controls front right motor
+	public static int rearRightMotor = 3; //Talon that controls back right motor
 	
 	//---------Drive Encoders----------
-	public static int leftEncoderA = 0;
-	public static int leftEncoderB = 1;
-	public static int rightEncoderA = 2;
-	public static int rightEncoderB = 3;
-	public static boolean leftEncoderReverse = false;
-	public static boolean rightEncoderReverse = true;
-	public static double leftEncoderIncrement = 1;
-	public static double rightEncoderIncrement = 1;
+	public static int leftEncoderA = 0; //Digital IO for left encoder's A channel
+	public static int leftEncoderB = 1; //Digital IO for left encoder's B channel
+	public static int rightEncoderA = 2; //Digital IO for right encoder's A channel
+	public static int rightEncoderB = 3; //Digital IO for right encoder's B channel
+	public static boolean leftEncoderReverse = false; //multiplies distance by -1
+	public static boolean rightEncoderReverse = true; //multiplies distance by -1
+	public static double leftEncoderIncrement = 1; //multiplier for left encoder distance
+	public static double rightEncoderIncrement = 1; //multiplier for right encoder distance
 	
 	//-----------Drive Gyro------------
-	public static int gyroUp = 0;
-	public static int gyroDown = 1;
+	public static int gyroUp = 0; //Gyro that is facing up
+	public static int gyroDown = 1; //Gyro that is facing down
 	
 	//----------Tote Pickup------------
-	public static int totePickupMotor = 4;
-	public static int totePickupTop = 4;
-	public static int totePickupBottom = 5;
-	public static int totePickup1High = 6;
-	public static int totePickup0High = 7;
+	public static int totePickupMotor = 4; //Jaguar for winch motor
+	public static int totePickupTop = 4; //Top of pickup rail
+	public static int totePickupBottom = 5; //Bottom of pickup rail
+	public static int totePickup1High = 6; //Height to put 1 tote on another
+	public static int totePickup0High = 7; //Right under first tote
+	public static boolean halleffectDefault = true; //Default reading from hall effect sensors
+	
+	public static double winchSpeedMultiplier = 1; //Use -1 to change direction
+	public static double operatorStickMultiplierY = 1; //Use -1 to invert joystick
 	
 	//------------Joystick-------------
 	
-	public static int driveStickLeft = 0; //Use this for arcade drive
+	public static int driveStickLeft = 0; //Stick used for arcade drive as well
 	public static int driveStickRight = 1;
 	public static int operatorStick = 2;
-	public static boolean tankDrive = true;
+	public static boolean tankDrive = true; //For tank or arcade drive (2 or 1 joysticks)
 }

@@ -1,7 +1,6 @@
 
 package org.team484.doge;
 
-import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Gyro;
@@ -14,8 +13,9 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
-import org.team484.doge.commands.ExampleCommand;
-import org.team484.doge.subsystems.ExampleSubsystem;
+import org.team484.doge.commands.AutonomousTotes;
+import org.team484.doge.subsystems.DriveTrain;
+import org.team484.doge.subsystems.TotePickup;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -26,11 +26,12 @@ import org.team484.doge.subsystems.ExampleSubsystem;
  */
 public class Robot extends IterativeRobot {
 
-	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
+	public static final DriveTrain driveTrain = new DriveTrain();
+	public static final TotePickup totePickup = new TotePickup();
 	public static OI oi;
 
     Command autonomousCommand;
-    
+    //----------THE FOLLOWING SETUP ROBOT COMPONENTS TO BE ACCESSED BY THE CODE----------
     
     //----------Joysticks----------
     public static final Joystick driveStickLeft = new Joystick(RobotMap.driveStickLeft);
@@ -70,7 +71,7 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
 		oi = new OI();
         // instantiate the command used for the autonomous period
-        autonomousCommand = new ExampleCommand();
+        autonomousCommand = new AutonomousTotes();
     }
 	
 	public void disabledPeriodic() {

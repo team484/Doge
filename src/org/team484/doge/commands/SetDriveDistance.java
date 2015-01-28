@@ -1,18 +1,21 @@
-
 package org.team484.doge.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
-
 import org.team484.doge.Robot;
+
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class ExampleCommand extends Command {
-
-    public ExampleCommand() {
+public class SetDriveDistance extends Command {
+	double distance;
+	boolean isDone = false;
+    public SetDriveDistance(double distance) {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.exampleSubsystem);
+        // eg. requires(chassis);
+    	this.distance = distance;
+    	
+    	requires(Robot.driveTrain);
     }
 
     // Called just before this Command runs the first time
@@ -21,11 +24,12 @@ public class ExampleCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	isDone = Robot.driveTrain.setDriveDistance(distance);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return isDone;
     }
 
     // Called once after isFinished returns true

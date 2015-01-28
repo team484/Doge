@@ -2,8 +2,7 @@ package org.team484.doge.subsystems;
 
 import org.team484.doge.Robot;
 import org.team484.doge.RobotMap;
-
-import com.ni.vision.NIVision.RotatedRect;
+import org.team484.doge.commands.DriveJoysticks;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -21,6 +20,7 @@ public class DriveTrain extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
+    	setDefaultCommand(new DriveJoysticks());
     }
     public void driveJoysticks() {
     	if (RobotMap.tankDrive) {
@@ -29,25 +29,36 @@ public class DriveTrain extends Subsystem {
     		Robot.driveRobot.arcadeDrive(Robot.driveStickLeft);
     	}
     }
-    public void setDriveDistance(double distance) {
+    public boolean setDriveDistance(double distance) {
     	setCurrentDistance();
     	driveDistance = distance + currentDistance;
+    	return true;
     }
-    public void driveDistance() {
+    public boolean driveDistance() {
     	setCurrentDistance();
+    	if (Math.abs(distanceToGo(driveDistance, currentDistance))<0.2) {
+    		return true;
+    	} else {
     	double moveValue = 0;
     	moveValue = distanceToGo(driveDistance, currentDistance) * 0.3;
     	moveValue = modifiedInput(moveValue);
     	Robot.driveRobot.arcadeDrive(moveValue, 0);
+    	return false;
+    	}
     	
     }
-    public void setDriveRotate(double rotate) {
+    public boolean setDriveRotate(double rotate) {
     	rotateAngle = gyroAngle() + rotate;
+    	return true;
     	
     }
-    public void driveRotate() {
-    	
-    	Robot.driveRobot.arcadeDrive(0, rotateAngle - gyroAngle());
+    public boolean driveRotate() {
+    	if (Math.abs(rotateAngle-gyroAngle()) < 1) {
+    		return true;
+    	} else {
+    		Robot.driveRobot.arcadeDrive(0, modifiedInput((rotateAngle - gyroAngle())/30));
+    		return false;
+    	}
     }
     
     //-----Not Robot Commands----

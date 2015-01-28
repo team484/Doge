@@ -1,7 +1,6 @@
 package org.team484.doge;
 
 import edu.wpi.first.wpilibj.buttons.Button;
-import org.team484.doge.commands.ExampleCommand;
 
 /**
  * This class is the glue that binds the controls on the physical operator
