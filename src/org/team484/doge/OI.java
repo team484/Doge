@@ -1,6 +1,10 @@
 package org.team484.doge;
 
+import org.team484.doge.commands.TotePickupJoystick;
+import org.team484.doge.commands.TotePickupStill;
+
 import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -33,5 +37,15 @@ public class OI {
     // Start the command when the button is released  and let it run the command
     // until it is finished as determined by it's isFinished method.
     // button.whenReleased(new ExampleCommand());
+	
+	//----------Buttons Defined----------
+	Button totePickupJoystick = new JoystickButton(Robot.operatorStick,RobotMap.totePickupJoystickButton);
+	
+	
+	public OI() { //Method used for giving buttons functions
+		totePickupJoystick.whileHeld(new TotePickupJoystick()); //When the button is held, the tote pickup is joystick controlled
+		totePickupJoystick.whenReleased(new TotePickupStill()); //Once the button is released the pickup holds position
+		
+	}
 }
 

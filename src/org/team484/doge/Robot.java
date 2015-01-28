@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 import org.team484.doge.commands.AutonomousTotes;
 import org.team484.doge.subsystems.DriveTrain;
+import org.team484.doge.subsystems.Logging;
 import org.team484.doge.subsystems.TotePickup;
 
 /**
@@ -28,6 +29,7 @@ public class Robot extends IterativeRobot {
 
 	public static final DriveTrain driveTrain = new DriveTrain();
 	public static final TotePickup totePickup = new TotePickup();
+	public static final Logging logging = new Logging();
 	public static OI oi;
 
     Command autonomousCommand;

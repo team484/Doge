@@ -40,8 +40,8 @@ public class DriveTrain extends Subsystem {
     		return true;
     	} else {
     	double moveValue = 0;
-    	moveValue = distanceToGo(driveDistance, currentDistance) * 0.3;
-    	moveValue = modifiedInput(moveValue);
+    	moveValue = distanceToGo(driveDistance, currentDistance) * RobotMap.moveValueSlope;
+    	moveValue = RobotMap.moveValueMultiplier * modifiedInput(moveValue);
     	Robot.driveRobot.arcadeDrive(moveValue, 0);
     	return false;
     	}
@@ -56,7 +56,7 @@ public class DriveTrain extends Subsystem {
     	if (Math.abs(rotateAngle-gyroAngle()) < 1) {
     		return true;
     	} else {
-    		Robot.driveRobot.arcadeDrive(0, modifiedInput((rotateAngle - gyroAngle())/30));
+    		Robot.driveRobot.arcadeDrive(0, RobotMap.rotateValueMultiplier * modifiedInput((rotateAngle - gyroAngle())/RobotMap.rotateValueSlope));
     		return false;
     	}
     }

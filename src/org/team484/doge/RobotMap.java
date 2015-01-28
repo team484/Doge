@@ -15,12 +15,19 @@ public class RobotMap {
     // number and the module. For example you with a rangefinder:
     // public static int rangefinderPort = 1;
     // public static int rangefinderModule = 1;
-	
+	//----------Logging Type----------
+	public static int loggingType = 1; //0 is no logging 1 is standard logging 2 is verbose logging
 	//----------Drive Motors----------
 	public static int frontLeftMotor = 0; //Talon that controls front left motor
 	public static int rearLeftMotor = 1; //Talon that controls back left motor
 	public static int frontRightMotor = 2; //Talon that controls front right motor
 	public static int rearRightMotor = 3; //Talon that controls back right motor
+	
+	//-------Autonomous-------
+	public static double moveValueMultiplier = 0.5; //For autonomous motion
+	public static double rotateValueMultiplier = 0.5; //For autonomous rotation
+	public static double moveValueSlope = 10.0; //How early the robot slows down in inches
+	public static double rotateValueSlope = 20.0; //How early the robot slows down in degrees
 	
 	//---------Drive Encoders----------
 	public static int leftEncoderA = 0; //Digital IO for left encoder's A channel
@@ -53,4 +60,10 @@ public class RobotMap {
 	public static int driveStickRight = 1;
 	public static int operatorStick = 2;
 	public static boolean tankDrive = true; //For tank or arcade drive (2 or 1 joysticks)
+	
+	//--------Joystick Buttons---------
+	public static int totePickupJoystickButton = 1;
+	public static int binAlginButton = 2;
+	public static int autoPickupButton = 3;
+	
 }
