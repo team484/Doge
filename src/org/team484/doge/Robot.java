@@ -7,8 +7,10 @@ import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.Utility;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -64,6 +66,10 @@ public class Robot extends IterativeRobot {
     public static final DigitalInput totePickup1High = new DigitalInput(RobotMap.totePickup1High);
     public static final DigitalInput totePickup0High = new DigitalInput(RobotMap.totePickup0High);
     
+    //---Power Distribution Panel---
+    public static final PowerDistributionPanel PDP = new PowerDistributionPanel();
+    
+    
     
     
     /**
@@ -78,6 +84,11 @@ public class Robot extends IterativeRobot {
 	
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		//USER button resets all sticky faults
+		if (Utility.getUserButton()) {
+			PDP.clearStickyFaults();
+		}
+				
 	}
 
     public void autonomousInit() {

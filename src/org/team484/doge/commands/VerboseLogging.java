@@ -12,11 +12,13 @@ public class VerboseLogging extends Command {
     public VerboseLogging() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	//System.currentTimeMillis();
     	requires(Robot.logging);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
