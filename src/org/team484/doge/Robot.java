@@ -66,6 +66,9 @@ public class Robot extends IterativeRobot {
     public static final DigitalInput totePickup1High = new DigitalInput(RobotMap.totePickup1High);
     public static final DigitalInput totePickup0High = new DigitalInput(RobotMap.totePickup0High);
     
+    //---Tote Pickup Contact Switch--
+    public static final DigitalInput toteContactSwitch = new DigitalInput(RobotMap.toteContactSwitch);
+    
     //---Power Distribution Panel---
     public static final PowerDistributionPanel PDP = new PowerDistributionPanel();
     

@@ -2,6 +2,8 @@ package org.team484.doge;
 
 import org.team484.doge.commands.TotePickupJoystick;
 import org.team484.doge.commands.TotePickupStill;
+import org.team484.doge.commands.ToteToBottom;
+import org.team484.doge.commands.ToteToTop;
 
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -40,12 +42,20 @@ public class OI {
 	
 	//----------Buttons Defined----------
 	Button totePickupJoystick = new JoystickButton(Robot.operatorStick,RobotMap.totePickupJoystickButton);
+	Button toteToTop = new JoystickButton(Robot.operatorStick, RobotMap.totePickupUpButton);
+	Button toteToBottom = new JoystickButton(Robot.operatorStick, RobotMap.totePickupDownButton);
 	
 	
 	public OI() { //Method used for giving buttons functions
 		totePickupJoystick.whileHeld(new TotePickupJoystick()); //When the button is held, the tote pickup is joystick controlled
 		totePickupJoystick.whenReleased(new TotePickupStill()); //Once the button is released the pickup holds position
 		
+		toteToTop.whileHeld(new ToteToTop());
+		toteToTop.whenReleased(new TotePickupStill());
+		
+		toteToBottom.whileHeld(new ToteToBottom());
+		toteToBottom.whenReleased(new TotePickupStill());
+	
 	}
 }
 

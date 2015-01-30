@@ -49,10 +49,12 @@ public class RobotMap {
 	public static int totePickupBottom = 5; //Bottom of pickup rail
 	public static int totePickup1High = 6; //Height to put 1 tote on another
 	public static int totePickup0High = 7; //Right under first tote
-	public static boolean halleffectDefault = true; //Default reading from hall effect sensors
+	public static int toteContactSwitch = 8; //Tells you when the robot is at a tote
 	
-	public static double winchSpeedMultiplier = 1; //Use -1 to change direction
+	public static boolean halleffectDefault = true; //Default reading from hall effect sensors
+	public static double winchSpeedMultiplier = 1; //Use -1 to change directions
 	public static double operatorStickMultiplierY = 1; //Use -1 to invert joystick
+	public static double driveToToteSpeed = 0.3; //Speed the robot autonomously drive to a tote
 	
 	//------------Joystick-------------
 	
@@ -63,6 +65,8 @@ public class RobotMap {
 	
 	//--------Joystick Buttons---------
 	public static int totePickupJoystickButton = 1;
+	public static int totePickupUpButton = 3;
+	public static int totePickupDownButton = 2;
 	public static int binAlginButton = 2;
 	public static int autoPickupButton = 3;
 	

@@ -60,7 +60,15 @@ public class DriveTrain extends Subsystem {
     		return false;
     	}
     }
-    
+    public boolean driveToTote() {
+    	if (Robot.toteContactSwitch.get()) {
+    		Robot.driveRobot.arcadeDrive(0.0,0.0);
+    		return true;
+    	} else {
+    		Robot.driveRobot.arcadeDrive(RobotMap.driveToToteSpeed, 0);
+    		return false;
+    	}
+    }
     //-----Not Robot Commands----
     public void setCurrentDistance() {
     	currentDistance = ((Robot.leftEncoder.getDistance() * RobotMap.leftEncoderIncrement) + (Robot.rightEncoder.getDistance() * RobotMap.rightEncoderIncrement))/2.0;

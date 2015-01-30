@@ -24,5 +24,34 @@ public class AutonomousTotes extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
+    	addSequential(new ToteToBottom());
+    	addSequential(new SetDriveDistance(3.0));
+    	addSequential(new DriveDistance());
+    	addSequential(new DriveToTote());
+    	addSequential(new ToteUpTo0High());
+    	addSequential(new SetDriveDistance(-6.0));
+    	addSequential(new DriveDistance());
+    	addSequential(new SetDriveRotate(90.0));
+    	addSequential(new DriveRotate());
+    	addSequential(new SetDriveDistance(24.0));
+    	addSequential(new DriveDistance());
+    	addSequential(new SetDriveRotate(-90.0));
+    	addSequential(new DriveRotate());
+    	addSequential(new SetDriveDistance(6.0));
+    	addSequential(new DriveDistance());
+    	addSequential(new ToteToBottom());
+    	addSequential(new DriveToTote());
+    	addSequential(new ToteUpTo0High());
+    	addSequential(new SetDriveDistance(-6.0));
+    	addSequential(new DriveDistance());
+    	addSequential(new SetDriveRotate(90.0));
+    	addSequential(new DriveRotate());
+    	addSequential(new SetDriveDistance(24.0));
+    	addSequential(new DriveDistance());
+    	addSequential(new SetDriveRotate(-90.0));
+    	addSequential(new SetDriveDistance(80.0));
+    	addSequential(new DriveDistance());
+    	
+    	
     }
 }
