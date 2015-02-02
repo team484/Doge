@@ -49,12 +49,19 @@ public class RobotMap {
 	public static int totePickupBottom = 5; //Bottom of pickup rail
 	public static int totePickup1High = 6; //Height to put 1 tote on another
 	public static int totePickup0High = 7; //Right under first tote
-	public static int toteContactSwitch = 8; //Tells you when the robot is at a tote
+	public static int toteCenterIR = 8; //IR for finding distance to tote
+	public static int toteLeftIR = 3; //IR on the left of the bot
+	public static int toteRightIR = 4; //IR on the right of the bot
 	
+	public static double totePickupDistance = 1.1; //Distance the tote is during pickup (Center IR)
 	public static boolean halleffectDefault = true; //Default reading from hall effect sensors
 	public static double winchSpeedMultiplier = 1; //Use -1 to change directions
 	public static double operatorStickMultiplierY = 1; //Use -1 to invert joystick
 	public static double driveToToteSpeed = 0.3; //Speed the robot autonomously drive to a tote
+	
+	public static double getIRDistance(double sensorVoltage) {
+		return Math.pow(sensorVoltage,-1.15) * 12343.85 ; //IR sensor equation
+	}
 	
 	//------------Joystick-------------
 	

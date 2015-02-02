@@ -61,7 +61,7 @@ public class DriveTrain extends Subsystem {
     	}
     }
     public boolean driveToTote() {
-    	if (Robot.toteContactSwitch.get()) {
+    	if (RobotMap.getIRDistance(Robot.toteCenterIR.getAverageVoltage()) < RobotMap.totePickupDistance) {
     		Robot.driveRobot.arcadeDrive(0.0,0.0);
     		return true;
     	} else {

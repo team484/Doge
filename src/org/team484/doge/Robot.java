@@ -1,6 +1,7 @@
 
 package org.team484.doge;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Gyro;
@@ -66,8 +67,10 @@ public class Robot extends IterativeRobot {
     public static final DigitalInput totePickup1High = new DigitalInput(RobotMap.totePickup1High);
     public static final DigitalInput totePickup0High = new DigitalInput(RobotMap.totePickup0High);
     
-    //---Tote Pickup Contact Switch--
-    public static final DigitalInput toteContactSwitch = new DigitalInput(RobotMap.toteContactSwitch);
+    //---Tote Pickup IR sensors----
+    public static final AnalogInput toteLeftIR = new AnalogInput(RobotMap.toteLeftIR);
+    public static final AnalogInput toteRightIR = new AnalogInput(RobotMap.toteRightIR);
+    public static final AnalogInput toteCenterIR = new AnalogInput(RobotMap.toteCenterIR);
     
     //---Power Distribution Panel---
     public static final PowerDistributionPanel PDP = new PowerDistributionPanel();
