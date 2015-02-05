@@ -7,6 +7,7 @@ import org.team484.doge.commands.RegularLogging;
 import org.team484.doge.commands.VerboseLogging;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -34,7 +35,8 @@ public class Logging extends Subsystem {
     	
     }
     public void noLogging() {
-    	
+    	SmartDashboard.putNumber("gyro", (Robot.gyroUp.getAngle() - Robot.gyroDown.getAngle())/2.0);
+    	SmartDashboard.putNumber("robotSpeed", Robot.leftEncoder.getRate() * RobotMap.leftEncoderIncrement / 12.0);
     }
 }
 

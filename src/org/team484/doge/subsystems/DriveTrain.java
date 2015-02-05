@@ -17,6 +17,7 @@ public class DriveTrain extends Subsystem {
 	double currentDistance = 0;
 	double rotateSetRate = 0.3;
 	double rotateAngle = 0;
+	int atSetpoint = 0;
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
@@ -36,7 +37,6 @@ public class DriveTrain extends Subsystem {
     public boolean setDriveDistance(double distance) {
     	setCurrentDistance();
     	driveDistance = distance + currentDistance;
-    	rotateSetRate = 0.3;
     	return true;
     }
     public boolean driveDistance() {
@@ -54,6 +54,8 @@ public class DriveTrain extends Subsystem {
     }
     public boolean setDriveRotate(double rotate) {
     	rotateAngle = gyroAngle() + rotate;
+    	atSetpoint = 0;
+    	setDriveRotate(0.3);
     	return true;
     	
     }
@@ -83,6 +85,9 @@ public class DriveTrain extends Subsystem {
     	rotateSetRate = modifiedInput(rotateSetRate);
     	Robot.driveRobot.arcadeDrive(0, rotateSetRate);
     	if (Math.abs(rotateAngle - gyroAngle()) < 2) {
+    		atSetpoint++;
+    	}
+    	if (atSetpoint > 5) {
     		return true;
     	} else {
     		return false;
