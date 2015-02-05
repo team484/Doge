@@ -15,28 +15,33 @@ public class DriveTrain extends Subsystem {
     // here. Call these from Commands
 	double driveDistance = 0;
 	double currentDistance = 0;
-	
+	double rotateSetRate = 0.3;
 	double rotateAngle = 0;
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     	setDefaultCommand(new DriveJoysticks());
     }
+    public void justDrive() {
+    	Robot.driveRobot.arcadeDrive(0.5,0);
+    }
     public void driveJoysticks() {
-    	if (RobotMap.tankDrive) {
-    		Robot.driveRobot.tankDrive(Robot.driveStickLeft, Robot.driveStickRight);
-    	} else {
-    		Robot.driveRobot.arcadeDrive(Robot.driveStickLeft);
-    	}
+    		Robot.driveRobot.arcadeDrive(-Robot.driveStickLeft.getY(),Robot.driveStickLeft.getX());
+    		//System.out.println("L: " + Robot.leftEncoder.getDistance() * RobotMap.leftEncoderIncrement + " R: " + Robot.rightEncoder.getDistance() * RobotMap.rightEncoderIncrement + " gyro: " + gyroAngle());
+    		if (Robot.driveStickLeft.getTrigger()) {
+    			Robot.leftEncoder.reset();
+    			Robot.rightEncoder.reset();
+    		}
     }
     public boolean setDriveDistance(double distance) {
     	setCurrentDistance();
     	driveDistance = distance + currentDistance;
+    	rotateSetRate = 0.3;
     	return true;
     }
     public boolean driveDistance() {
     	setCurrentDistance();
-    	if (Math.abs(distanceToGo(driveDistance, currentDistance))<0.2) {
+    	if (Math.abs(distanceToGo(driveDistance, currentDistance))<0.4) {
     		return true;
     	} else {
     	double moveValue = 0;
@@ -52,21 +57,45 @@ public class DriveTrain extends Subsystem {
     	return true;
     	
     }
-    public boolean driveRotate() {
-    	if (Math.abs(rotateAngle-gyroAngle()) < 1) {
+    public boolean driveRotate2() {
+    	System.out.println("Angle: " + gyroAngle() + " Rate: " + gyroRate());
+    	double changeRate = RobotMap.rotateValueMultiplier * modifiedInput((rotateAngle - gyroAngle())/RobotMap.rotateValueSlope);
+    	if (Math.abs(rotateAngle-gyroAngle()) < 0) {
     		return true;
     	} else {
-    		Robot.driveRobot.arcadeDrive(0, RobotMap.rotateValueMultiplier * modifiedInput((rotateAngle - gyroAngle())/RobotMap.rotateValueSlope));
+    		if (-gyroRate() > changeRate) {
+    			rotateSetRate = rotateSetRate - Math.abs(changeRate + gyroRate()/10);
+    		} else {
+    			rotateSetRate = rotateSetRate + Math.abs(changeRate + gyroRate()/10);
+    		}
+    		Robot.driveRobot.arcadeDrive(0, rotateSetRate);
+    		return false;
+    	}
+    	
+    }
+    public boolean driveRotate() {
+    	double goToChangeRate = 5 * (rotateAngle - gyroAngle());
+    	if (gyroRate() < goToChangeRate) {
+    		rotateSetRate = rotateSetRate + 0.009 * Math.abs(gyroRate() - goToChangeRate);    		
+    	} else {
+    		rotateSetRate = rotateSetRate - 0.009 * Math.abs(gyroRate() - goToChangeRate);
+    	}
+    	rotateSetRate = modifiedInput(rotateSetRate);
+    	Robot.driveRobot.arcadeDrive(0, rotateSetRate);
+    	if (Math.abs(rotateAngle - gyroAngle()) < 2) {
+    		return true;
+    	} else {
     		return false;
     	}
     }
     public boolean driveToTote() {
-    	if (RobotMap.getIRDistance(Robot.toteCenterIR.getAverageVoltage()) < RobotMap.totePickupDistance) {
-    		Robot.driveRobot.arcadeDrive(0.0,0.0);
-    		return true;
-    	} else {
-    		Robot.driveRobot.arcadeDrive(RobotMap.driveToToteSpeed, 0);
+    	System.out.println(Robot.toteCenterIR.getAverageVoltage());
+    	if (Robot.toteCenterIR.getAverageVoltage() < 2.15 & Robot.toteCenterIR.getAverageVoltage() > 0.2) {
+    		Robot.driveRobot.arcadeDrive(RobotMap.driveToToteSpeed,0.0);
     		return false;
+    	} else {
+    		Robot.driveRobot.arcadeDrive(0.0, 0.0);
+    		return true;
     	}
     }
     //-----Not Robot Commands----
@@ -90,6 +119,9 @@ public class DriveTrain extends Subsystem {
     }
     public double gyroAngle() {
     	return (Robot.gyroUp.getAngle() - Robot.gyroDown.getAngle())/2.0;
+    }
+    public double gyroRate() {
+    	return (Robot.gyroUp.getRate() - Robot.gyroDown.getRate())/2.0;
     }
 }
 

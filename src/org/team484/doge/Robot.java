@@ -40,7 +40,6 @@ public class Robot extends IterativeRobot {
     
     //----------Joysticks----------
     public static final Joystick driveStickLeft = new Joystick(RobotMap.driveStickLeft);
-    public static final Joystick driveStickRight = new Joystick(RobotMap.driveStickRight);
     public static final Joystick operatorStick = new Joystick(RobotMap.operatorStick);
     
     //------------Gyros------------
@@ -62,7 +61,6 @@ public class Robot extends IterativeRobot {
     public static final Encoder rightEncoder = new Encoder(RobotMap.rightEncoderA, RobotMap.rightEncoderB,RobotMap.rightEncoderReverse);
     
     //---Tote Pickup Hall Effect---
-    public static final DigitalInput totePickupTop = new DigitalInput(RobotMap.totePickupTop);
     public static final DigitalInput totePickupBottom = new DigitalInput(RobotMap.totePickupBottom);
     public static final DigitalInput totePickup1High = new DigitalInput(RobotMap.totePickup1High);
     public static final DigitalInput totePickup0High = new DigitalInput(RobotMap.totePickup0High);

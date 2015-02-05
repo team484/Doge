@@ -21,7 +21,7 @@ public class TotePickup extends Subsystem {
     	Robot.totePickupMotor.set(0);
     }
     public void totePickupJoystick() {
-    	if (Robot.totePickupTop.get() != RobotMap.halleffectDefault && Robot.operatorStick.getY() * RobotMap.operatorStickMultiplierY > 0) {
+    	if (Robot.operatorStick.getY() * RobotMap.operatorStickMultiplierY > 0) {
     		totePickupStill();
     	} else if (Robot.totePickupBottom.get() != RobotMap.halleffectDefault && Robot.operatorStick.getY() * RobotMap.operatorStickMultiplierY < 0){
     		totePickupStill();
@@ -30,17 +30,11 @@ public class TotePickup extends Subsystem {
     	}
     }
     public boolean toteToTop() {
-    	boolean goUp = Robot.totePickupTop.get() == RobotMap.halleffectDefault;
-    	if (goUp) {
     		Robot.totePickupMotor.set(1 * RobotMap.winchSpeedMultiplier);
     		return false;
-    	} else {
-    		Robot.totePickupMotor.set(0);
-    		return true;
-    	}
     }
     public boolean toteToBottom() {
-    	boolean goDown = Robot.totePickupBottom.get() == RobotMap.halleffectDefault;
+    	boolean goDown = (Robot.totePickupBottom.get() == RobotMap.halleffectDefault);
     	if (goDown) {
     		Robot.totePickupMotor.set(-1 * RobotMap.winchSpeedMultiplier);
     		return false;
@@ -50,7 +44,7 @@ public class TotePickup extends Subsystem {
     	}
     }
     public boolean toteUpTo0High() {
-    	if (Robot.totePickupTop.get() == RobotMap.halleffectDefault && Robot.totePickup1High.get() == RobotMap.halleffectDefault && Robot.totePickup0High.get() == RobotMap.halleffectDefault) {
+    	if (Robot.totePickup1High.get() == RobotMap.halleffectDefault && Robot.totePickup0High.get() == RobotMap.halleffectDefault) {
     		Robot.totePickupMotor.set(1 * RobotMap.winchSpeedMultiplier);
     		return false;
     	} else {
@@ -68,7 +62,7 @@ public class TotePickup extends Subsystem {
     	}
     }
     public boolean toteUpTo1High() {
-    	if (Robot.totePickupTop.get() == RobotMap.halleffectDefault && Robot.totePickup1High.get() == RobotMap.halleffectDefault) {
+    	if (Robot.totePickup1High.get() == RobotMap.halleffectDefault) {
     		Robot.totePickupMotor.set(1 * RobotMap.winchSpeedMultiplier);
     		return false;
     	} else {

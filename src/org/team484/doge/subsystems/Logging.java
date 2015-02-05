@@ -1,5 +1,6 @@
 package org.team484.doge.subsystems;
 
+import org.team484.doge.Robot;
 import org.team484.doge.RobotMap;
 import org.team484.doge.commands.NoLogging;
 import org.team484.doge.commands.RegularLogging;

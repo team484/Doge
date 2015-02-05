@@ -1,6 +1,7 @@
 package org.team484.doge.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 
 /**
  *
@@ -27,26 +28,27 @@ public class AutonomousTotes extends CommandGroup {
     	addSequential(new ToteToBottom());
     	addSequential(new DriveToTote());
     	addSequential(new ToteUpTo1High());
-    	addSequential(new SetDriveDistance(-6.0));
+    	addParallel(new JustDrive(), 0.3);
+    	addSequential(new SetDriveDistance(-10.0));
     	addSequential(new DriveDistance());
     	addSequential(new SetDriveRotate(-90.0));
     	addSequential(new DriveRotate());
-    	addSequential(new SetDriveDistance(81.0));
+    	addSequential(new SetDriveDistance(70.0));
     	addSequential(new DriveDistance());
     	addSequential(new SetDriveRotate(90.0));
     	addSequential(new DriveRotate());
     	addSequential(new DriveToTote());
     	addSequential(new ToteDownTo0High());
-    	addSequential(new SetDriveDistance(-3.0));
+    	addSequential(new SetDriveDistance(-5.0));
     	addSequential(new DriveDistance());
-    	addParallel(new ToteToBottom());
+    	addSequential(new ToteToBottom());
     	addSequential(new DriveToTote());
     	addSequential(new ToteUpTo1High());
-    	addSequential(new SetDriveDistance(-6.0));
+    	addSequential(new SetDriveDistance(-10.0));
     	addSequential(new DriveDistance());
     	addSequential(new SetDriveRotate(-90.0));
     	addSequential(new DriveRotate());
-    	addSequential(new SetDriveDistance(81.0));
+    	addSequential(new SetDriveDistance(54.0));
     	addSequential(new DriveDistance());
     	addSequential(new SetDriveRotate(90.0));
     	addSequential(new DriveRotate());

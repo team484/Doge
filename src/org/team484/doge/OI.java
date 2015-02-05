@@ -1,5 +1,6 @@
 package org.team484.doge;
 
+import org.team484.doge.commands.Rotate90;
 import org.team484.doge.commands.TotePickupJoystick;
 import org.team484.doge.commands.TotePickupStill;
 import org.team484.doge.commands.ToteToBottom;
@@ -44,7 +45,7 @@ public class OI {
 	Button totePickupJoystick = new JoystickButton(Robot.operatorStick,RobotMap.totePickupJoystickButton);
 	Button toteToTop = new JoystickButton(Robot.operatorStick, RobotMap.totePickupUpButton);
 	Button toteToBottom = new JoystickButton(Robot.operatorStick, RobotMap.totePickupDownButton);
-	
+	Button rotate90 = new JoystickButton(Robot.operatorStick, 7);
 	
 	public OI() { //Method used for giving buttons functions
 		totePickupJoystick.whileHeld(new TotePickupJoystick()); //When the button is held, the tote pickup is joystick controlled
@@ -55,6 +56,8 @@ public class OI {
 		
 		toteToBottom.whileHeld(new ToteToBottom());
 		toteToBottom.whenReleased(new TotePickupStill());
+		
+		rotate90.whenPressed(new Rotate90());
 	
 	}
 }
