@@ -18,13 +18,15 @@ public class DriveTrain extends Subsystem {
 	double rotateSetRate = 0.3;
 	double rotateAngle = 0;
 	int atSetpoint = 0;
+	double driveSetRate = 0.6;
+	double[] gyroValues = new double[5];
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     	setDefaultCommand(new DriveJoysticks());
     }
     public void justDrive() {
-    	Robot.driveRobot.arcadeDrive(0.5,0);
+    	Robot.driveRobot.arcadeDrive(-0.5,0);
     }
     public void driveJoysticks() {
     		Robot.driveRobot.arcadeDrive(-Robot.driveStickLeft.getY(),Robot.driveStickLeft.getX());
@@ -35,11 +37,14 @@ public class DriveTrain extends Subsystem {
     		}
     }
     public boolean setDriveDistance(double distance) {
+    	driveDistance = 0.0;
+    	currentDistance = 0.0;
     	setCurrentDistance();
     	driveDistance = distance + currentDistance;
+    	atSetpoint = 0;
     	return true;
     }
-    public boolean driveDistance() {
+    public boolean driveDistance2() {
     	setCurrentDistance();
     	if (Math.abs(distanceToGo(driveDistance, currentDistance))<0.4) {
     		return true;
@@ -52,10 +57,32 @@ public class DriveTrain extends Subsystem {
     	}
     	
     }
+    public boolean driveDistance() {
+    	setCurrentDistance();
+    	double goToChangeRate = distanceToGo(driveDistance, currentDistance);
+    	if (goToChangeRate > 80) {
+    		goToChangeRate = 80;
+    	}
+    	if (currentRate() < goToChangeRate) {
+    		driveSetRate = driveSetRate + 0.0005 * Math.abs(currentRate() - goToChangeRate);    		
+    	} else {
+    		driveSetRate = driveSetRate - 0.0005 * Math.abs(currentRate() - goToChangeRate);
+    	}
+    	driveSetRate = modifiedInput(driveSetRate);
+    	Robot.driveRobot.arcadeDrive(driveSetRate, 0);
+    	if (Math.abs(distanceToGo(driveDistance, currentDistance)) < 0.5) {
+    		atSetpoint++;
+    	}
+    	if (atSetpoint > 1) {
+    		return true;
+    	} else {
+    		return false;
+    	}
+    }
     public boolean setDriveRotate(double rotate) {
     	rotateAngle = gyroAngle() + rotate;
     	atSetpoint = 0;
-    	setDriveRotate(0.3);
+    	rotateSetRate = 0.2;
     	return true;
     	
     }
@@ -76,18 +103,19 @@ public class DriveTrain extends Subsystem {
     	
     }
     public boolean driveRotate() {
-    	double goToChangeRate = 5 * (rotateAngle - gyroAngle());
+    	//setGyroValue(gyroRate());
+    	double goToChangeRate = 5.5 * (rotateAngle - gyroAngle());
+    	if (goToChangeRate > 150) {
+    		goToChangeRate = 150;
+    	}
     	if (gyroRate() < goToChangeRate) {
-    		rotateSetRate = rotateSetRate + 0.009 * Math.abs(gyroRate() - goToChangeRate);    		
+    		rotateSetRate = rotateSetRate + 0.007 * Math.abs(gyroRate() - goToChangeRate);    		
     	} else {
-    		rotateSetRate = rotateSetRate - 0.009 * Math.abs(gyroRate() - goToChangeRate);
+    		rotateSetRate = rotateSetRate - 0.007 * Math.abs(gyroRate() - goToChangeRate);
     	}
     	rotateSetRate = modifiedInput(rotateSetRate);
     	Robot.driveRobot.arcadeDrive(0, rotateSetRate);
-    	if (Math.abs(rotateAngle - gyroAngle()) < 2) {
-    		atSetpoint++;
-    	}
-    	if (atSetpoint > 5) {
+    	if (Math.abs(rotateAngle - gyroAngle()) < 1) {
     		return true;
     	} else {
     		return false;
@@ -122,11 +150,34 @@ public class DriveTrain extends Subsystem {
     public double distanceToGo(double driveDistance, double currentDistance) {
     	return driveDistance - currentDistance;
     }
+    public double currentRate() {
+    	return ((Robot.leftEncoder.getRate() * RobotMap.leftEncoderIncrement) + (Robot.rightEncoder.getRate() * RobotMap.rightEncoderIncrement))/2.0;
+
+    }
     public double gyroAngle() {
     	return (Robot.gyroUp.getAngle() - Robot.gyroDown.getAngle())/2.0;
     }
     public double gyroRate() {
     	return (Robot.gyroUp.getRate() - Robot.gyroDown.getRate())/2.0;
+    }
+    public void setGyroValue(double value) {
+    	int i = 0;
+    	while (i < 4) {
+    		gyroValues[i] = gyroValues[i+1];
+    		i++;
+    	}
+    	gyroValues[4] = value;
+    }
+    public double getAverageGyroValye() {
+    	double average = 0.0;
+    	int i = 0;
+    	while (i < 5) {
+    		if (!Double.isNaN(gyroValues[i])) {
+    			average = average + gyroValues[i];
+    		}
+    		i++;
+    	}
+    	return average / 5.0;
     }
 }
 

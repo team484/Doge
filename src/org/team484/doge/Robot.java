@@ -2,6 +2,7 @@
 package org.team484.doge;
 
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Gyro;
@@ -12,11 +13,17 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Utility;
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
+import org.team484.doge.commands.AutonomousToteAndCan;
 import org.team484.doge.commands.AutonomousTotes;
+import org.team484.doge.commands.NoLogging;
+import org.team484.doge.subsystems.ArmHeight;
+import org.team484.doge.subsystems.ArmLength;
 import org.team484.doge.subsystems.DriveTrain;
 import org.team484.doge.subsystems.Logging;
 import org.team484.doge.subsystems.TotePickup;
@@ -33,6 +40,8 @@ public class Robot extends IterativeRobot {
 	public static final DriveTrain driveTrain = new DriveTrain();
 	public static final TotePickup totePickup = new TotePickup();
 	public static final Logging logging = new Logging();
+	public static final ArmLength armLength = new ArmLength();
+	public static final ArmHeight armHeight = new ArmHeight();
 	public static OI oi;
 
     Command autonomousCommand;
@@ -64,7 +73,7 @@ public class Robot extends IterativeRobot {
     public static final DigitalInput totePickupBottom = new DigitalInput(RobotMap.totePickupBottom);
     public static final DigitalInput totePickup1High = new DigitalInput(RobotMap.totePickup1High);
     public static final DigitalInput totePickup0High = new DigitalInput(RobotMap.totePickup0High);
-    
+
     //---Tote Pickup IR sensors----
     public static final AnalogInput toteLeftIR = new AnalogInput(RobotMap.toteLeftIR);
     public static final AnalogInput toteRightIR = new AnalogInput(RobotMap.toteRightIR);
@@ -73,8 +82,12 @@ public class Robot extends IterativeRobot {
     //---Power Distribution Panel---
     public static final PowerDistributionPanel PDP = new PowerDistributionPanel();
     
-    
-    
+    //--Arm systems---
+    public static final Talon armHeightMotor = new Talon(RobotMap.armHeightMotor);
+    public static final VictorSP armLengthMotor = new VictorSP(RobotMap.armLengthMotor);
+    public static final AnalogPotentiometer armPot = new AnalogPotentiometer(RobotMap.armPot, RobotMap.armPotScale);
+    public static final DigitalInput armExtended = new DigitalInput(RobotMap.armExtended);
+    public static final DigitalInput armRetracted = new DigitalInput(RobotMap.armRetracted);
     
     /**
      * This function is run when the robot is first started up and should be
@@ -83,7 +96,7 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
 		oi = new OI();
         // instantiate the command used for the autonomous period
-        autonomousCommand = new AutonomousTotes();
+        autonomousCommand = new AutonomousToteAndCan();
     }
 	
 	public void disabledPeriodic() {
@@ -92,7 +105,6 @@ public class Robot extends IterativeRobot {
 		if (Utility.getUserButton()) {
 			PDP.clearStickyFaults();
 		}
-				
 	}
 
     public void autonomousInit() {
@@ -136,4 +148,41 @@ public class Robot extends IterativeRobot {
     public void testPeriodic() {
         LiveWindow.run();
     }
+    
+    static double distance(double x1,double x2,double y1,double y2) {
+		return Math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
+	}
+	public static double[] calculateCenter(double x1, double x2, double y1, double y2, double radius) {
+		double separation = distance(x1,x2,y1,y2),mirrorDistance;
+		double[] answer = new double[3];
+		answer[0] = 0;
+		answer[1] = 0;
+		answer[2] = 0;
+		if (separation == 0.0) {
+			answer[0] = -1;
+		} else if (separation == 2 * radius) {
+			answer[1] = ((x1 + x2) / 2.0);
+			answer[2] = ((y1 + y2) / 2.0);
+		} else if (separation > 2 * radius) {
+			answer[0] = -1;
+		} else {
+			mirrorDistance = Math.sqrt(Math.pow(radius, 2)-Math.pow(separation/2, 2));
+			double C1X;
+			double C1Y;
+			double C2X;
+			double C2Y;
+			C1X = ((x1+x2)/2 + mirrorDistance*(y1-y2)/separation);
+			C1Y = ((y1+y2)/2+mirrorDistance*(x2-x1)/separation);
+			C2X = ((x1+x2)/2-mirrorDistance*(y1-y2)/separation);
+			C2Y = ((y1+y2)/2-mirrorDistance*(x2-x1)/separation);
+			if (C1X > C2X) {
+				answer[1] = C1X;
+				answer[2] = C1Y;
+			} else {
+				answer[1] = C2X;
+				answer[2] = C2Y;
+			}
+		}
+		return answer;
+	}
 }

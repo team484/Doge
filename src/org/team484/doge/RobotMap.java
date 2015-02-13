@@ -18,10 +18,10 @@ public class RobotMap {
 	//----------Logging Type----------
 	public static int loggingType = 0; //0 is no logging 1 is standard logging 2 is verbose logging
 	//----------Drive Motors----------
-	public static int frontLeftMotor = 3; //Talon that controls front left motor
-	public static int rearLeftMotor = 2; //Talon that controls back left motor
-	public static int frontRightMotor = 1; //Talon that controls front right motor
-	public static int rearRightMotor = 0; //Talon that controls back right motor
+	public static int frontLeftMotor = 0; //Talon that controls front left motor
+	public static int rearLeftMotor = 1; //Talon that controls back left motor
+	public static int frontRightMotor = 2; //Talon that controls front right motor
+	public static int rearRightMotor = 3; //Talon that controls back right motor
 	
 	//-------Autonomous-------
 	public static double moveValueMultiplier = 0.5; //For autonomous motion
@@ -43,6 +43,18 @@ public class RobotMap {
 	public static int gyroUp = 0; //Gyro that is facing up
 	public static int gyroDown = 1; //Gyro that is facing down
 	
+	//---------------Arm---------------
+	public static int armHeightMotor = 5;
+	public static int armLengthMotor = 6;
+	public static int armPot = 5;
+	public static int armExtended = 8;
+	public static int armRetracted = 7;
+	
+	public static double armLengthSpeed = 1;
+	public static double armPotScale = 136.36;
+	public static boolean armExtendDefault = false; //Sensor reading when arm ISNT extended
+	public static boolean armRetractDefault = false; //Sensor reading when arm ISNT retracted
+	
 	//----------Tote Pickup------------
 	public static int totePickupMotor = 4; //Jaguar for winch motor
 	public static int totePickupBottom = 6; //Bottom of pickup rail
@@ -54,12 +66,28 @@ public class RobotMap {
 	
 	public static double totePickupDistance = 1.1; //Distance the tote is during pickup (Center IR)
 	public static boolean halleffectDefault = true; //Default reading from hall effect sensors
-	public static double winchSpeedMultiplier = 1; //Use -1 to change directions
+	public static double winchSpeedMultiplier = 0.6; //Use -1 to change directions
 	public static double operatorStickMultiplierY = 1; //Use -1 to invert joystick
 	public static double driveToToteSpeed = 0.6; //Speed the robot autonomously drive to a tote
 	
 	public static double getIRDistance(double sensorVoltage) {
-		return Math.pow(sensorVoltage,-1.15) * 6627 ; //IR sensor equation
+		return Math.pow(sensorVoltage,-1.15) * 10.968 ; //IR sensor equation
+	}
+	public static double[] getLeftIRCoords() {
+		double[] answer = new double[2];
+		answer[0] = getIRDistance(Robot.toteLeftIR.getAverageVoltage()) * 0.38268; //distance * sin(22.5)
+		answer[1] = getIRDistance(Robot.toteLeftIR.getAverageVoltage()) * 0.92388; //distance * cos(22.5)
+		answer[0] = -12.5 + answer[0];
+		return answer;
+		
+	}
+	public static double[] getRightIRCoords() {
+		double[] answer = new double[2];
+		answer[0] = getIRDistance(Robot.toteLeftIR.getAverageVoltage()) * 0.38268; //distance * sin(22.5)
+		answer[1] = getIRDistance(Robot.toteLeftIR.getAverageVoltage()) * 0.92388; //distance * cos(22.5)
+		answer[0] = 12.5 - answer[0];
+		return answer;
+		
 	}
 	
 	//------------Joystick-------------
