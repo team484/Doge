@@ -27,6 +27,7 @@ public class ArmLength extends Subsystem {
     		Robot.armLengthMotor.set(0);
     		return true;
     	}
+    	
     }
     public boolean armIn() {
     	if (RobotMap.armRetractDefault == Robot.armRetracted.get()) {

@@ -4,14 +4,39 @@ import org.team484.doge.Robot;
 import org.team484.doge.RobotMap;
 import org.team484.doge.commands.DriveJoysticks;
 
+import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  *
  */
-public class DriveTrain extends Subsystem {
-    
-    // Put methods for controlling this subsystem
+public class DriveTrain extends PIDSubsystem {
+    // 0.03, -0.02, 0.02
+	
+	//20 -2 100
+	 private static final double Kp = 15;
+	    private static final double Ki = -2;
+	    private static final double Kd = 75;
+	    public DriveTrain() {
+			super(Kp, Ki, Kd);
+	        // Use these to get going:
+	        // setSetpoint() -  Sets where the PID controller should move the system
+	        //                  to
+	        // enable() - Enables the PID controller.
+			}
+	    protected double returnPIDInput() {
+	        // Return your input value for the PID loop
+	        // e.g. a sensor, like a potentiometer:
+	        // return yourPot.getAverageVoltage() / kYourMaxVoltage;
+	    	return setCurrentDistance();
+	    }
+	    
+	    protected void usePIDOutput(double output) {
+	        // Use output to drive your system, like a motor
+	        // e.g. yourMotor.set(output);
+	    	Robot.driveRobot.arcadeDrive(output, 0);
+	    }
+	// Put methods for controlling this subsystem
     // here. Call these from Commands
 	double driveDistance = 0;
 	double currentDistance = 0;
@@ -23,10 +48,15 @@ public class DriveTrain extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
+    	setOutputRange(-0.6, 0.6);
+    	setAbsoluteTolerance(1);
     	setDefaultCommand(new DriveJoysticks());
     }
     public void justDrive() {
     	Robot.driveRobot.arcadeDrive(-0.5,0);
+    }
+    public void rotateSpeed(double rotate) {
+    	Robot.driveRobot.arcadeDrive(0, rotate);
     }
     public void driveJoysticks() {
     		Robot.driveRobot.arcadeDrive(-Robot.driveStickLeft.getY(),Robot.driveStickLeft.getX());
@@ -132,9 +162,9 @@ public class DriveTrain extends Subsystem {
     	}
     }
     //-----Not Robot Commands----
-    public void setCurrentDistance() {
+    public double setCurrentDistance() {
     	currentDistance = ((Robot.leftEncoder.getDistance() * RobotMap.leftEncoderIncrement) + (Robot.rightEncoder.getDistance() * RobotMap.rightEncoderIncrement))/2.0;
-
+    	return currentDistance;
     }
     public double modifiedInput(double input) {
     	double newInput;
@@ -178,6 +208,16 @@ public class DriveTrain extends Subsystem {
     		i++;
     	}
     	return average / 5.0;
+    }
+    public boolean zeroEncoders() {
+    	Robot.leftEncoder.reset();
+    	Robot.rightEncoder.reset();
+    	return true;
+    }
+    public boolean zeroGyro() {
+    	Robot.gyroUp.reset();
+    	Robot.gyroDown.reset();
+    	return true;
     }
 }
 

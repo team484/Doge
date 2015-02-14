@@ -2,11 +2,17 @@ package org.team484.doge;
 
 import org.team484.doge.commands.ArmIn;
 import org.team484.doge.commands.ArmOut;
+import org.team484.doge.commands.ArmTest1;
+import org.team484.doge.commands.ArmTest2;
+import org.team484.doge.commands.ArmToAngle;
 import org.team484.doge.commands.Rotate90;
+import org.team484.doge.commands.SetDriveRotate;
 import org.team484.doge.commands.TotePickupJoystick;
 import org.team484.doge.commands.TotePickupStill;
 import org.team484.doge.commands.ToteToBottom;
 import org.team484.doge.commands.ToteToTop;
+import org.team484.doge.commands.ZeroEncoders;
+import org.team484.doge.commands.ZeroGyro;
 
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -47,8 +53,11 @@ public class OI {
 	Button totePickupJoystick = new JoystickButton(Robot.operatorStick,RobotMap.totePickupJoystickButton);
 	Button toteToTop = new JoystickButton(Robot.operatorStick, RobotMap.totePickupUpButton);
 	Button toteToBottom = new JoystickButton(Robot.operatorStick, RobotMap.totePickupDownButton);
-	Button armExtend = new JoystickButton(Robot.operatorStick, 8);
+	Button armExtend = new JoystickButton(Robot.operatorStick, 6);
 	Button armRetract = new JoystickButton(Robot.operatorStick, 7);
+	
+	Button armTest1 = new JoystickButton(Robot.operatorStick, 11);
+	Button armTest2 = new JoystickButton(Robot.operatorStick, 10);
 	
 	public OI() { //Method used for giving buttons functions
 		totePickupJoystick.whileHeld(new TotePickupJoystick()); //When the button is held, the tote pickup is joystick controlled
@@ -62,6 +71,11 @@ public class OI {
 		
 		armExtend.whileHeld(new ArmOut());
 		armRetract.whileHeld(new ArmIn());
+		
+		armTest1.whenPressed(new ZeroGyro());
+		armTest2.whenPressed(new ZeroEncoders());
+		armTest1.whileHeld(new ArmTest1());
+		armTest2.whileHeld(new ArmTest2());
 	
 	}
 }

@@ -9,12 +9,14 @@ import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Utility;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.PIDCommand;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -22,6 +24,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.team484.doge.commands.AutonomousToteAndCan;
 import org.team484.doge.commands.AutonomousTotes;
 import org.team484.doge.commands.NoLogging;
+import org.team484.doge.commands.SetDriveRotate;
 import org.team484.doge.subsystems.ArmHeight;
 import org.team484.doge.subsystems.ArmLength;
 import org.team484.doge.subsystems.DriveTrain;
@@ -43,10 +46,8 @@ public class Robot extends IterativeRobot {
 	public static final ArmLength armLength = new ArmLength();
 	public static final ArmHeight armHeight = new ArmHeight();
 	public static OI oi;
-
     Command autonomousCommand;
     //----------THE FOLLOWING SETUP ROBOT COMPONENTS TO BE ACCESSED BY THE CODE----------
-    
     //----------Joysticks----------
     public static final Joystick driveStickLeft = new Joystick(RobotMap.driveStickLeft);
     public static final Joystick operatorStick = new Joystick(RobotMap.operatorStick);
@@ -54,7 +55,6 @@ public class Robot extends IterativeRobot {
     //------------Gyros------------
     public static final Gyro gyroUp = new Gyro(RobotMap.gyroUp);
     public static final Gyro gyroDown = new Gyro(RobotMap.gyroDown);
-    
     //------Speed Controllers------
     public static final Talon frontLeftMotor = new Talon(RobotMap.frontLeftMotor);
     public static final Talon rearLeftMotor =  new Talon(RobotMap.rearLeftMotor);
@@ -148,7 +148,10 @@ public class Robot extends IterativeRobot {
     public void testPeriodic() {
         LiveWindow.run();
     }
-    
+    public static double gyroAngle() {
+    	
+    	return 1.0;
+    }
     static double distance(double x1,double x2,double y1,double y2) {
 		return Math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
 	}

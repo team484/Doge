@@ -29,6 +29,7 @@ public class Logging extends Subsystem {
 		}
 	}
 	public void regularLogging() {
+		
 		pushDashboard();
 	}
 	public void verboseLogging() {
@@ -38,6 +39,7 @@ public class Logging extends Subsystem {
 		pushDashboard();
 	}
 	public void pushDashboard() {
+		SmartDashboard.putNumber("Distance", (Robot.leftEncoder.getDistance() * RobotMap.leftEncoderIncrement + Robot.rightEncoder.getDistance() * RobotMap.rightEncoderIncrement)/2.0);
 		SmartDashboard.putNumber("gyro", (Robot.gyroUp.getAngle() - Robot.gyroDown.getAngle())/2.0);
 		SmartDashboard.putNumber("robotSpeed", Robot.leftEncoder.getRate() * RobotMap.leftEncoderIncrement / 12.0);
 		SmartDashboard.putNumber("amperage", Robot.PDP.getTotalCurrent());
