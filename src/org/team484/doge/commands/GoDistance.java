@@ -4,6 +4,7 @@ import org.team484.doge.Robot;
 import org.team484.doge.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -31,7 +32,7 @@ public class GoDistance extends Command {
 	protected boolean isFinished() {
 		if (Robot.driveTrain.onTarget()) {
 			return true;
-		} else if (Math.abs(Robot.leftEncoder.getRate() * RobotMap.leftEncoderIncrement + Robot.rightEncoder.getRate() * RobotMap.rightEncoderIncrement)/2.0 < 1 && Math.abs(setpoint - Robot.driveTrain.setCurrentDistance()) < 1) {
+		} else if (Math.abs(Robot.leftEncoder.getRate() * RobotMap.leftEncoderIncrement + Robot.rightEncoder.getRate() * RobotMap.rightEncoderIncrement)/2.0 < 1 && Math.abs(setpoint - Robot.driveTrain.setCurrentDistance()) < 3) {
 			return true;
 		} else {
 		return false;
@@ -41,11 +42,13 @@ public class GoDistance extends Command {
 	// Called once after isFinished returns true
 	protected void end() {
 		Robot.driveTrain.disable();
+		SmartDashboard.putBoolean("ReadPID", false);
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
 		Robot.driveTrain.disable();
+		SmartDashboard.putBoolean("ReadPID", false);
 	}
 }

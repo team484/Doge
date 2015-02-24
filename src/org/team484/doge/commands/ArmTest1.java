@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class ArmTest1 extends CommandGroup {
     
     public  ArmTest1() {
-    	addSequential(new GoRotate(181), 10);
+    	addSequential(new GoRotate(180), 10);
     	
         // Add Commands here:
         // e.g. addSequential(new Command1());

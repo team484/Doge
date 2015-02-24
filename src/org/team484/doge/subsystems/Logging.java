@@ -6,6 +6,7 @@ import org.team484.doge.commands.NoLogging;
 import org.team484.doge.commands.RegularLogging;
 import org.team484.doge.commands.VerboseLogging;
 
+import edu.wpi.first.wpilibj.ControllerPower;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -16,7 +17,18 @@ public class Logging extends Subsystem {
 
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
-
+	public static boolean frontLeftError = false;
+	public static boolean rearLeftError = false;
+	public static boolean frontRightError = false;
+	public static boolean rearRightError = false;
+	public static boolean frontLeftCurrent = false;
+	public static boolean rearLeftCurrent = false;
+	public static boolean frontRightCurrent = false;
+	public static boolean rearRightCurrent = false;
+	public static boolean totesCurrent = false;
+	public static boolean armCurrent = false;
+	public static boolean armExtensionCurrent = false;
+	public static boolean gyroError = false;
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		//setDefaultCommand(new MySpecialCommand());
@@ -38,12 +50,65 @@ public class Logging extends Subsystem {
 	public void noLogging() {
 		pushDashboard();
 	}
-	public void pushDashboard() {
+	public static void pushDashboard() {
+		if (Robot.PDP.getCurrent(0) == 0 && Robot.PDP.getCurrent(1) > 5) {
+			frontLeftError = true;
+		}
+		if (Robot.PDP.getCurrent(1) == 0 && Robot.PDP.getCurrent(0) > 5) {
+			rearLeftError = true;
+		}
+		if (Robot.PDP.getCurrent(2) == 0 && Robot.PDP.getCurrent(3) > 5) {
+			frontRightError = true;
+		}
+		if (Robot.PDP.getCurrent(3) == 0 && Robot.PDP.getCurrent(2) > 5) {
+			rearRightError = true;
+		}
+		if (Robot.PDP.getCurrent(0) > 60) {
+			frontLeftCurrent = true;
+		}
+		if (Robot.PDP.getCurrent(1) > 60) {
+			rearLeftCurrent = true;
+		}
+		if (Robot.PDP.getCurrent(2) > 60) {
+			frontRightCurrent = true;
+		}
+		if (Robot.PDP.getCurrent(3) > 60) {
+			rearRightCurrent = true;
+		}
+		if (Robot.PDP.getCurrent(14) > 60) {
+			totesCurrent = true;
+		}
+		if (Robot.PDP.getCurrent(15) > 60) {
+			armCurrent = true;
+		}
+		if (Robot.PDP.getCurrent(4) > 30) {
+			armExtensionCurrent = true;
+		}
+		if (Math.abs(Robot.gyroUp.getRate() + Robot.gyroDown.getRate()) > 220) {
+			gyroError = true;
+		}
+		SmartDashboard.putBoolean("frontLeftError", frontLeftError);
+		SmartDashboard.putBoolean("rearLeftError", rearLeftError);
+		SmartDashboard.putBoolean("frontRightError", frontRightError);
+		SmartDashboard.putBoolean("rearRightError", rearRightError);
+		SmartDashboard.putBoolean("frontLeftCurrent", frontLeftCurrent);
+		SmartDashboard.putBoolean("rearLeftCurrent", rearLeftCurrent);
+		SmartDashboard.putBoolean("frontRightCurrent", frontRightCurrent);
+		SmartDashboard.putBoolean("rearRightCurrent", rearRightCurrent);
+		SmartDashboard.putBoolean("totesCurrent", totesCurrent);
+		SmartDashboard.putBoolean("armCurrent", armCurrent);
+		SmartDashboard.putBoolean("armExtensionCurrent", armExtensionCurrent);
+		SmartDashboard.putBoolean("gyroError", gyroError);
+		
+		SmartDashboard.putNumber("Left", RobotMap.getIRDistance(Robot.toteLeftIR.getAverageVoltage()));
+		SmartDashboard.putNumber("Center", RobotMap.getIRDistance(Robot.toteCenterIR.getAverageVoltage()));
+		SmartDashboard.putNumber("Right", RobotMap.getIRDistance(Robot.toteRightIR.getAverageVoltage()));
 		SmartDashboard.putNumber("Distance", (Robot.leftEncoder.getDistance() * RobotMap.leftEncoderIncrement + Robot.rightEncoder.getDistance() * RobotMap.rightEncoderIncrement)/2.0);
 		SmartDashboard.putNumber("gyro", (Robot.gyroUp.getAngle() - Robot.gyroDown.getAngle())/2.0);
 		SmartDashboard.putNumber("robotSpeed", Robot.leftEncoder.getRate() * RobotMap.leftEncoderIncrement / 12.0);
-		SmartDashboard.putNumber("amperage", Robot.PDP.getTotalCurrent());
+		SmartDashboard.putNumber("amperage", Robot.PDP.getTotalCurrent() + ControllerPower.getInputCurrent());
 		SmartDashboard.putNumber("armAngle", Robot.armPot.get());
+		
 		if (Robot.armRetracted.get()) {
 			SmartDashboard.putNumber("armExtend", 0);
 		} else if (!Robot.armRetracted.get() && !Robot.armExtended.get()) {

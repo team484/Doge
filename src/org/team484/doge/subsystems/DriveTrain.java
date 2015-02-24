@@ -4,6 +4,7 @@ import org.team484.doge.Robot;
 import org.team484.doge.RobotMap;
 import org.team484.doge.commands.DriveJoysticks;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -14,9 +15,9 @@ public class DriveTrain extends PIDSubsystem {
     // 0.03, -0.02, 0.02
 	
 	//20 -2 100
-	 private static final double Kp = 15;
-	    private static final double Ki = -2;
-	    private static final double Kd = 75;
+	 private static double Kp = 0.2;
+	    private static double Ki = -0.05;
+	    private static double Kd = 0.7;
 	    public DriveTrain() {
 			super(Kp, Ki, Kd);
 	        // Use these to get going:
@@ -49,7 +50,7 @@ public class DriveTrain extends PIDSubsystem {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     	setOutputRange(-0.6, 0.6);
-    	setAbsoluteTolerance(1);
+    	setAbsoluteTolerance(0.01);
     	setDefaultCommand(new DriveJoysticks());
     }
     public void justDrive() {
@@ -59,7 +60,18 @@ public class DriveTrain extends PIDSubsystem {
     	Robot.driveRobot.arcadeDrive(0, rotate);
     }
     public void driveJoysticks() {
-    		Robot.driveRobot.arcadeDrive(-Robot.driveStickLeft.getY(),Robot.driveStickLeft.getX());
+    	double multiplier = 0.7;
+    	if (Robot.driveStickLeft.getTrigger()) {
+    		multiplier = multiplier / 3;
+    	}
+    	if (Robot.driveStickLeft.getY() > 0.005) {
+    		Robot.driveRobot.arcadeDrive(-Robot.driveStickLeft.getY() * multiplier - 0.25,Robot.driveStickLeft.getX());
+    	} else  if (Robot.driveStickLeft.getY() < -0.005){
+    		Robot.driveRobot.arcadeDrive(-Robot.driveStickLeft.getY() * multiplier + 0.25,Robot.driveStickLeft.getX());
+    	} else {
+    		Robot.driveRobot.arcadeDrive(0, Robot.driveStickLeft.getX());
+    	}
+    		
     		//System.out.println("L: " + Robot.leftEncoder.getDistance() * RobotMap.leftEncoderIncrement + " R: " + Robot.rightEncoder.getDistance() * RobotMap.rightEncoderIncrement + " gyro: " + gyroAngle());
     		if (Robot.driveStickLeft.getTrigger()) {
     			Robot.leftEncoder.reset();

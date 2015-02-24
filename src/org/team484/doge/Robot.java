@@ -3,6 +3,8 @@ package org.team484.doge;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.ControllerPower;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Gyro;
@@ -21,6 +23,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
+import org.team484.doge.commands.AutonomousCanEnd;
 import org.team484.doge.commands.AutonomousToteAndCan;
 import org.team484.doge.commands.AutonomousTotes;
 import org.team484.doge.commands.NoLogging;
@@ -31,6 +34,8 @@ import org.team484.doge.subsystems.DriveTrain;
 import org.team484.doge.subsystems.Logging;
 import org.team484.doge.subsystems.TotePickup;
 
+import com.ni.vision.NIVision.UserPointSymbol;
+
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -39,7 +44,6 @@ import org.team484.doge.subsystems.TotePickup;
  * directory.
  */
 public class Robot extends IterativeRobot {
-
 	public static final DriveTrain driveTrain = new DriveTrain();
 	public static final TotePickup totePickup = new TotePickup();
 	public static final Logging logging = new Logging();
@@ -88,15 +92,16 @@ public class Robot extends IterativeRobot {
     public static final AnalogPotentiometer armPot = new AnalogPotentiometer(RobotMap.armPot, RobotMap.armPotScale);
     public static final DigitalInput armExtended = new DigitalInput(RobotMap.armExtended);
     public static final DigitalInput armRetracted = new DigitalInput(RobotMap.armRetracted);
-    
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
+    	
 		oi = new OI();
-        // instantiate the command used for the autonomous period
-        autonomousCommand = new AutonomousToteAndCan();
+        autonomousCommand = new AutonomousCanEnd();
+        CameraServer camera = CameraServer.getInstance();
+        camera.startAutomaticCapture("cam0");
     }
 	
 	public void disabledPeriodic() {
@@ -105,6 +110,7 @@ public class Robot extends IterativeRobot {
 		if (Utility.getUserButton()) {
 			PDP.clearStickyFaults();
 		}
+		Logging.pushDashboard();
 	}
 
     public void autonomousInit() {
