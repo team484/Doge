@@ -1,11 +1,8 @@
 package org.team484.doge.commands;
 
 import org.team484.doge.Robot;
-import org.team484.doge.subsystems.DriveTrain;
-
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDOutput;
 
@@ -59,6 +56,7 @@ public class GoRotate extends Command {
     protected void end() {
     	pid.disable();
     	Robot.driveTrain.rotateSpeed(0);
+    	Robot.driveTrain.driveJoysticks();
     }
 
     // Called when another command which requires one or more of the same

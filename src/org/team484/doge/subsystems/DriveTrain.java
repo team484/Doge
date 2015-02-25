@@ -3,10 +3,7 @@ package org.team484.doge.subsystems;
 import org.team484.doge.Robot;
 import org.team484.doge.RobotMap;
 import org.team484.doge.commands.DriveJoysticks;
-
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
-import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  *

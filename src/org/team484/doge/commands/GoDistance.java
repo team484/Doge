@@ -4,8 +4,6 @@ import org.team484.doge.Robot;
 import org.team484.doge.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 /**
  *
  */
@@ -42,13 +40,12 @@ public class GoDistance extends Command {
 	// Called once after isFinished returns true
 	protected void end() {
 		Robot.driveTrain.disable();
-		SmartDashboard.putBoolean("ReadPID", false);
+		Robot.driveTrain.driveJoysticks();
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
-		Robot.driveTrain.disable();
-		SmartDashboard.putBoolean("ReadPID", false);
+		end();
 	}
 }

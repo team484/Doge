@@ -109,6 +109,11 @@ public class Logging extends Subsystem {
 		SmartDashboard.putNumber("amperage", Robot.PDP.getTotalCurrent() + ControllerPower.getInputCurrent());
 		SmartDashboard.putNumber("armAngle", Robot.armPot.get());
 		
+		if (Robot.ds.isDisabled()) {
+			SmartDashboard.putBoolean("disabled", true);
+		} else {
+			SmartDashboard.putBoolean("disabled", false);
+		}
 		if (Robot.armRetracted.get()) {
 			SmartDashboard.putNumber("armExtend", 0);
 		} else if (!Robot.armRetracted.get() && !Robot.armExtended.get()) {

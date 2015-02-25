@@ -1,40 +1,34 @@
-
 package org.team484.doge;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.ControllerPower;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Utility;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.PIDCommand;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.team484.doge.commands.AutonomousCanEnd;
-import org.team484.doge.commands.AutonomousToteAndCan;
+import org.team484.doge.commands.AutonomousDoNothing;
+import org.team484.doge.commands.AutonomousToAuto;
 import org.team484.doge.commands.AutonomousTotes;
-import org.team484.doge.commands.NoLogging;
-import org.team484.doge.commands.SetDriveRotate;
 import org.team484.doge.subsystems.ArmHeight;
 import org.team484.doge.subsystems.ArmLength;
 import org.team484.doge.subsystems.DriveTrain;
 import org.team484.doge.subsystems.Logging;
 import org.team484.doge.subsystems.TotePickup;
-
-import com.ni.vision.NIVision.UserPointSymbol;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -44,13 +38,16 @@ import com.ni.vision.NIVision.UserPointSymbol;
  * directory.
  */
 public class Robot extends IterativeRobot {
+	public static DriverStation ds;
+	
 	public static final DriveTrain driveTrain = new DriveTrain();
 	public static final TotePickup totePickup = new TotePickup();
 	public static final Logging logging = new Logging();
 	public static final ArmLength armLength = new ArmLength();
 	public static final ArmHeight armHeight = new ArmHeight();
 	public static OI oi;
-    Command autonomousCommand;
+    Command[] autonomousCommand = new Command[4];
+    public static int selectedAutonomous = 0;
     //----------THE FOLLOWING SETUP ROBOT COMPONENTS TO BE ACCESSED BY THE CODE----------
     //----------Joysticks----------
     public static final Joystick driveStickLeft = new Joystick(RobotMap.driveStickLeft);
@@ -97,9 +94,12 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-    	
+    	ds = DriverStation.getInstance();
 		oi = new OI();
-        autonomousCommand = new AutonomousCanEnd();
+		autonomousCommand[0] = new AutonomousDoNothing();
+		autonomousCommand[1] = new AutonomousToAuto();
+		autonomousCommand[2] = new AutonomousTotes();
+        autonomousCommand[3] = new AutonomousCanEnd();
         CameraServer camera = CameraServer.getInstance();
         camera.startAutomaticCapture("cam0");
     }
@@ -110,12 +110,14 @@ public class Robot extends IterativeRobot {
 		if (Utility.getUserButton()) {
 			PDP.clearStickyFaults();
 		}
-		Logging.pushDashboard();
+		selectedAutonomous = (int) SmartDashboard.getNumber("selectedAutonomous", selectedAutonomous); //Gets the autonomous mode from dashboard
+		SmartDashboard.putNumber("setAutonomous", selectedAutonomous);
+		Logging.pushDashboard();//updates dashboard
 	}
 
     public void autonomousInit() {
         // schedule the autonomous command (example)
-        if (autonomousCommand != null) autonomousCommand.start();
+        if (autonomousCommand[selectedAutonomous] != null) autonomousCommand[selectedAutonomous].start();
     }
 
     /**
@@ -130,7 +132,7 @@ public class Robot extends IterativeRobot {
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove
         // this line or comment it out.
-        if (autonomousCommand != null) autonomousCommand.cancel();
+        if (autonomousCommand[selectedAutonomous] != null) autonomousCommand[selectedAutonomous].cancel();
     }
 
     /**
