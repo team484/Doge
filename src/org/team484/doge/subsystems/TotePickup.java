@@ -21,9 +21,7 @@ public class TotePickup extends Subsystem {
     	Robot.totePickupMotor.set(0);
     }
     public void totePickupJoystick() {
-    	if (Robot.operatorStick.getY() * RobotMap.operatorStickMultiplierY > 0) {
-    		totePickupStill();
-    	} else if (Robot.totePickupBottom.get() != RobotMap.halleffectDefault && Robot.operatorStick.getY() * RobotMap.operatorStickMultiplierY < 0){
+    	if (Robot.totePickupBottom.get() != RobotMap.halleffectDefault && Robot.operatorStick.getY() * RobotMap.operatorStickMultiplierY < 0){
     		totePickupStill();
     	} else {
     		Robot.totePickupMotor.set(Robot.operatorStick.getY() * RobotMap.operatorStickMultiplierY);

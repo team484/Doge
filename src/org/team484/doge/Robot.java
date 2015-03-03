@@ -102,6 +102,7 @@ public class Robot extends IterativeRobot {
         autonomousCommand[3] = new AutonomousCanEnd();
         CameraServer camera = CameraServer.getInstance();
         camera.startAutomaticCapture("cam0");
+        
     }
 	
 	public void disabledPeriodic() {
@@ -155,10 +156,6 @@ public class Robot extends IterativeRobot {
      */
     public void testPeriodic() {
         LiveWindow.run();
-    }
-    public static double gyroAngle() {
-    	
-    	return 1.0;
     }
     static double distance(double x1,double x2,double y1,double y2) {
 		return Math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));

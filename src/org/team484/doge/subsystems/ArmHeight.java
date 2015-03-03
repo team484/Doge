@@ -46,7 +46,11 @@ public class ArmHeight extends PIDSubsystem {
     	setHeightMotor(output);
     }
     public void armHeightJoystick() {
-    	setHeightMotor(Robot.operatorStick.getY());
+    	if (!Robot.operatorStick.getTrigger()) {
+    		setHeightMotor(Robot.operatorStick.getY());
+    	} else {
+    		setHeightMotor(0);
+    	}
     }
     public void setHeightMotor(double speed) {
     	if (Robot.armRetracted.get() == RobotMap.armRetractDefault && Robot.armPot.get() < 47 && speed > 0) {

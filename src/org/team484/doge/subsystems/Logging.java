@@ -51,6 +51,7 @@ public class Logging extends Subsystem {
 		pushDashboard();
 	}
 	public static void pushDashboard() {
+		System.out.println("Left: " + Robot.leftEncoder.getDistance() + " Right: " + Robot.rightEncoder.getDistance());
 		if (Robot.PDP.getCurrent(0) == 0 && Robot.PDP.getCurrent(1) > 5) {
 			frontLeftError = true;
 		}
@@ -110,9 +111,9 @@ public class Logging extends Subsystem {
 		SmartDashboard.putNumber("armAngle", Robot.armPot.get());
 		
 		if (Robot.ds.isDisabled()) {
-			SmartDashboard.putBoolean("disabled", true);
+			SmartDashboard.putBoolean("isDisabled", true);
 		} else {
-			SmartDashboard.putBoolean("disabled", false);
+			SmartDashboard.putBoolean("isDisabled", false);
 		}
 		if (Robot.armRetracted.get()) {
 			SmartDashboard.putNumber("armExtend", 0);
