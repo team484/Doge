@@ -20,6 +20,8 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.team484.doge.commands.AutonomousCanAndTote;
+import org.team484.doge.commands.AutonomousCanCenter;
 import org.team484.doge.commands.AutonomousCanEnd;
 import org.team484.doge.commands.AutonomousDoNothing;
 import org.team484.doge.commands.AutonomousToAuto;
@@ -46,7 +48,7 @@ public class Robot extends IterativeRobot {
 	public static final ArmLength armLength = new ArmLength();
 	public static final ArmHeight armHeight = new ArmHeight();
 	public static OI oi;
-    Command[] autonomousCommand = new Command[4];
+    Command[] autonomousCommand = new Command[6];
     public static int selectedAutonomous = 0;
     //----------THE FOLLOWING SETUP ROBOT COMPONENTS TO BE ACCESSED BY THE CODE----------
     //----------Joysticks----------
@@ -93,6 +95,7 @@ public class Robot extends IterativeRobot {
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
+    CameraServer camera;
     public void robotInit() {
     	ds = DriverStation.getInstance();
 		oi = new OI();
@@ -100,7 +103,9 @@ public class Robot extends IterativeRobot {
 		autonomousCommand[1] = new AutonomousToAuto();
 		autonomousCommand[2] = new AutonomousTotes();
         autonomousCommand[3] = new AutonomousCanEnd();
-        CameraServer camera = CameraServer.getInstance();
+        autonomousCommand[4] = new AutonomousCanAndTote();
+        autonomousCommand[5] = new AutonomousCanCenter();
+        camera = CameraServer.getInstance();
         camera.startAutomaticCapture("cam0");
         
     }
