@@ -4,11 +4,14 @@ import org.team484.doge.Robot;
 import org.team484.doge.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 /**
  *
  */
 public class GoDistance extends Command {
 	double setpoint;
+
 	public GoDistance(double setpoint) {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
@@ -20,6 +23,7 @@ public class GoDistance extends Command {
 	protected void initialize() {
 		Robot.driveTrain.setSetpoint(setpoint);
 		Robot.driveTrain.enable();
+		SmartDashboard.putBoolean("ReadPID", true);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -30,10 +34,13 @@ public class GoDistance extends Command {
 	protected boolean isFinished() {
 		if (Robot.driveTrain.onTarget()) {
 			return true;
-		} else if (Math.abs(Robot.leftEncoder.getRate() * RobotMap.leftEncoderIncrement + Robot.rightEncoder.getRate() * RobotMap.rightEncoderIncrement)/2.0 < 1 && Math.abs(setpoint - Robot.driveTrain.setCurrentDistance()) < 3) {
+		} else if (Math.abs(Robot.leftEncoder.getRate()
+				* RobotMap.leftEncoderIncrement + Robot.rightEncoder.getRate()
+				* RobotMap.rightEncoderIncrement) / 2.0 < 1
+				&& Math.abs(setpoint - Robot.driveTrain.setCurrentDistance()) < 3) {
 			return true;
 		} else {
-		return false;
+			return false;
 		}
 	}
 
@@ -41,6 +48,7 @@ public class GoDistance extends Command {
 	protected void end() {
 		Robot.driveTrain.disable();
 		Robot.driveTrain.driveJoysticks();
+		SmartDashboard.putBoolean("ReadPID", false);
 	}
 
 	// Called when another command which requires one or more of the same

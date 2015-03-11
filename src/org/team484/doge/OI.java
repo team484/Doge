@@ -14,26 +14,37 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-	//----------Buttons Defined----------
-	Button totePickupJoystick = new JoystickButton(Robot.operatorStick,RobotMap.totePickupJoystickButton);
-	Button toteToTop = new JoystickButton(Robot.operatorStick, RobotMap.totePickupUpButton);
-	Button toteToBottom = new JoystickButton(Robot.operatorStick, RobotMap.totePickupDownButton);
+	// ----------Buttons Defined----------
+	Button totePickupJoystick = new JoystickButton(Robot.operatorStick,
+			RobotMap.totePickupJoystickButton);
+	Button toteToTop = new JoystickButton(Robot.operatorStick,
+			RobotMap.totePickupUpButton);
+	Button toteToBottom = new JoystickButton(Robot.operatorStick,
+			RobotMap.totePickupDownButton);
 	Button armExtend = new JoystickButton(Robot.operatorStick, 6);
 	Button armRetract = new JoystickButton(Robot.operatorStick, 7);
-	
-	public OI() { //Method used for giving buttons functions
-		totePickupJoystick.whileHeld(new TotePickupJoystick()); //When the button is held, the tote pickup is joystick controlled
-		totePickupJoystick.whenReleased(new TotePickupStill()); //Once the button is released the pickup holds position
-		
+
+	public OI() { // Method used for giving buttons functions
+		totePickupJoystick.whileHeld(new TotePickupJoystick()); // When the
+																// button is
+																// held, the
+																// tote pickup
+																// is joystick
+																// controlled
+		totePickupJoystick.whenReleased(new TotePickupStill()); // Once the
+																// button is
+																// released the
+																// pickup holds
+																// position
+
 		toteToTop.whileHeld(new ToteToTop());
 		toteToTop.whenReleased(new TotePickupStill());
-		
+
 		toteToBottom.whileHeld(new ToteToBottom());
 		toteToBottom.whenReleased(new TotePickupStill());
-		
+
 		armExtend.whileHeld(new ArmOut());
 		armRetract.whileHeld(new ArmIn());
-	
+
 	}
 }
-
