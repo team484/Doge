@@ -10,39 +10,52 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class ArmLength extends Subsystem {
-    
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
 
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
-    	setDefaultCommand(new ArmStill());
-    }
-    public boolean armOut() {
-    	if (RobotMap.armExtendDefault == Robot.armExtended.get() && Robot.armPot.get() > 47) {
-    		Robot.armLengthMotor.set(-RobotMap.armLengthSpeed);
-    		return false;
-    	} else {
-    		Robot.armLengthMotor.set(0);
-    		return true;
-    	}
-    	
-    }
-    public boolean armIn() {
-    	if (RobotMap.armRetractDefault == Robot.armRetracted.get()) {
-    		Robot.armLengthMotor.set(RobotMap.armLengthSpeed);
-    		return false;
-    	} else {
-    		Robot.armLengthMotor.set(0);
-    		return true;
-    	}
-    }
-    public void armStill() {
-    	Robot.armLengthMotor.set(0);
-    }
-    public boolean doNotExtend() {
-    	return Robot.armPot.get() < 47;
-    }
+	// Put methods for controlling this subsystem
+	// here. Call these from Commands.
+
+	public void initDefaultCommand() {
+		// Set the default command for a subsystem here.
+		// setDefaultCommand(new MySpecialCommand());
+		setDefaultCommand(new ArmStill());
+	}
+
+	public boolean armOut() {
+		if (RobotMap.armExtendDefault == Robot.armExtended.get()
+				&& Robot.armPot.get() > 47) {
+			if (Robot.ds.getMatchTime() < 5 && !Robot.ds.isAutonomous() && Robot.ds.getMatchTime() > 0) {
+				armIn();
+			} else {
+				Robot.armLengthMotor.set(-RobotMap.armLengthSpeed);
+			}
+			return false;
+		} else {
+			Robot.armLengthMotor.set(0);
+			return true;
+		}
+
+	}
+
+	public boolean armIn() {
+		if (RobotMap.armRetractDefault == Robot.armRetracted.get()) {
+			Robot.armLengthMotor.set(RobotMap.armLengthSpeed);
+			return false;
+		} else {
+			Robot.armLengthMotor.set(0);
+			return true;
+		}
+	}
+
+	public void armStill() {
+		if (Robot.ds.getMatchTime() < 5 && !Robot.ds.isAutonomous() && Robot.ds.getMatchTime() > 0) {
+			armIn();
+		} else {
+			Robot.armLengthMotor.set(0);
+		}
+	}
+
+	public boolean doNotExtend() {
+		return Robot.armPot.get() < 47;
+	}
+	
 }
-

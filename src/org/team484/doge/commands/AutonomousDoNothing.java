@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  *
  */
 public class AutonomousDoNothing extends CommandGroup {
-    
-    public  AutonomousDoNothing() {
-    }
+
+	public AutonomousDoNothing() {
+	}
 }
