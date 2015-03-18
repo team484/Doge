@@ -15,12 +15,23 @@ public class AutonomousCanCenter extends CommandGroup {
 		addSequential(new WaitCommand(0.2),0.2);
 		addSequential(new ArmUp(), 0.65);
 		addParallel(new ArmIn(), 4);
+		addSequential(new ArmToAngle(8), 6);
+		addSequential(new WaitCommand(0.5),0.5);
+		addSequential(new GoRotate(-90),3);
+		addSequential(new WaitCommand(0.5), 0.5);
+		addSequential(new GoDistance(40),4);
+		/*addSequential(new ArmDown(), 1);
+		addSequential(new ArmToAngle(105), 4);
+		addSequential(new ArmOut(), 3);
+		addSequential(new WaitCommand(0.2),0.2);
+		addSequential(new ArmUp(), 0.65);
+		addParallel(new ArmIn(), 4);
 		addSequential(new ArmToAngle(50), 3.4);
 		addSequential(new WaitCommand(0.5), 0.5);
 		addSequential(new ArmToAngle(20), 2);
 		addSequential(new GoRotate(-90),3);
 		addSequential(new WaitCommand(0.3), 0.3);
-		addSequential(new GoDistance(35),4);
+		addSequential(new GoDistance(35),4);*/
 		// Add Commands here:
 		// e.g. addSequential(new Command1());
 		// addSequential(new Command2());
