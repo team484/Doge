@@ -103,6 +103,8 @@ public class Robot extends IterativeRobot {
 			RobotMap.toteRightIR);
 	public static final AnalogInput toteCenterIR = new AnalogInput(
 			RobotMap.toteCenterIR);
+	public static final AnalogInput toteTopIR = new AnalogInput(
+			RobotMap.toteTopIR);
 
 	// ---Power Distribution Panel---
 	public static final PowerDistributionPanel PDP = new PowerDistributionPanel();

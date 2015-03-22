@@ -21,7 +21,13 @@ public class TotePickup extends Subsystem {
 	public void totePickupStill() {
 		Robot.totePickupMotor.set(0);
 	}
-
+	public boolean toteThere() {
+		if (RobotMap.getIRDistance(Robot.toteTopIR.getAverageVoltage()) < 3) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 	public void totePickupJoystick() {
 		if (Robot.totePickupBottom.get() != RobotMap.halleffectDefault
 				&& Robot.operatorStick.getY()

@@ -8,10 +8,11 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class JustDrive extends Command {
-
-	public JustDrive() {
+	double speed = 0.0;
+	public JustDrive(double speed) {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
+		this.speed = speed;
 		requires(Robot.driveTrain);
 	}
 
@@ -21,7 +22,7 @@ public class JustDrive extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		Robot.driveTrain.justDrive();
+		Robot.driveTrain.justDrive(speed);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

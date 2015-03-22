@@ -2,7 +2,6 @@ package org.team484.doge.subsystems;
 
 import org.team484.doge.Robot;
 import org.team484.doge.commands.RunLEDs;
-
 import edu.wpi.first.wpilibj.Relay.Direction;
 import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -11,7 +10,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class LEDs extends Subsystem {
-
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 	int blink = 0;

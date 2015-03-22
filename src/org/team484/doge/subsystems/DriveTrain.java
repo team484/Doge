@@ -38,8 +38,8 @@ public class DriveTrain extends PIDSubsystem {
 		setDefaultCommand(new DriveJoysticks());
 	}
 
-	public void justDrive() {
-		Robot.driveRobot.arcadeDrive(-0.5, 0);
+	public void justDrive(double speed) {
+		Robot.driveRobot.arcadeDrive(-speed, 0);
 	}
 
 	public void rotateSpeed(double rotate) {
