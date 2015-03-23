@@ -12,31 +12,31 @@ public class Stacker extends CommandGroup {
     	addParallel(new IncreasePickupSpeed());
     	addSequential(new ToteThere());
     	addSequential(new WaitCommand(0.5), 0.5);
-    	addSequential(new ToteUpTo1High());
+    	addSequential(new ToteUpTo1High(),4);
     	addSequential(new ToteToTop(), 0.5);
     	addSequential(new ToteThere());
-    	addSequential(new ToteDownTo1High());
-    	addSequential(new JustDrive(-0.5), 0.3);
-    	addSequential(new ToteDownTo0High());
-    	addSequential(new JustDrive(0.5), 0.32);
+    	addSequential(new ToteDownTo1High(),3);
+    	addSequential(new JustDrive(-0.6), 0.5);
+    	addSequential(new ToteDownTo0High(),3);
+    	addSequential(new JustDrive(0.6), 0.55);
     	
     	addSequential(new WaitCommand(0.5), 0.5);
-    	addSequential(new ToteUpTo1High());
+    	addSequential(new ToteUpTo1High(),4);
     	addSequential(new ToteToTop(), 0.5);
     	addSequential(new ToteThere());
-    	addSequential(new ToteDownTo1High());
-    	addSequential(new JustDrive(-0.5), 0.3);
-    	addSequential(new ToteDownTo0High());
-    	addSequential(new JustDrive(0.5), 0.32);
+    	addSequential(new ToteDownTo1High(),3);
+    	addSequential(new JustDrive(-0.6), 0.5);
+    	addSequential(new ToteDownTo0High(),3);
+    	addSequential(new JustDrive(0.6), 0.55);
     	
     	addSequential(new WaitCommand(0.5), 0.5);
-    	addSequential(new ToteUpTo1High());
+    	addSequential(new ToteUpTo1High(),4);
     	addSequential(new ToteToTop(), 0.5);
     	addSequential(new ToteThere());
-    	addSequential(new ToteDownTo1High());
-    	addSequential(new JustDrive(-0.5), 0.3);
-    	addSequential(new ToteDownTo0High());
-    	addSequential(new JustDrive(0.5), 0.32);
+    	addSequential(new ToteDownTo1High(),3);
+    	addSequential(new JustDrive(-0.6), 0.5);
+    	addSequential(new ToteDownTo0High(),3);
+    	addSequential(new JustDrive(0.6), 0.55);
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

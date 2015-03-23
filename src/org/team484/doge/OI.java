@@ -4,6 +4,7 @@ import org.team484.doge.commands.ArmDown;
 import org.team484.doge.commands.ArmIn;
 import org.team484.doge.commands.ArmOut;
 import org.team484.doge.commands.ArmUp;
+import org.team484.doge.commands.Stacker;
 import org.team484.doge.commands.TotePickupJoystick;
 import org.team484.doge.commands.TotePickupStill;
 import org.team484.doge.commands.ToteToBottom;
@@ -28,6 +29,8 @@ public class OI {
 	Button armRetract = new JoystickButton(Robot.operatorStick, 7);
 	Button armUp = new JoystickButton(Robot.operatorStick, 11);
 	Button armDown = new JoystickButton(Robot.operatorStick, 10);
+	
+	Button stacker = new JoystickButton(Robot.driveStickLeft, 6);
 
 	public OI() { // Method used for giving buttons functions
 		totePickupJoystick.whileHeld(new TotePickupJoystick()); // When the
@@ -52,5 +55,7 @@ public class OI {
 		armRetract.whileHeld(new ArmIn());
 		armUp.whileHeld(new ArmUp());
 		armDown.whileHeld(new ArmDown());
+		
+		stacker.whileHeld(new Stacker());
 	}
 }
