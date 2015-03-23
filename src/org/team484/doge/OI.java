@@ -4,6 +4,7 @@ import org.team484.doge.commands.ArmDown;
 import org.team484.doge.commands.ArmIn;
 import org.team484.doge.commands.ArmOut;
 import org.team484.doge.commands.ArmUp;
+import org.team484.doge.commands.SetPickupSpeed;
 import org.team484.doge.commands.Stacker;
 import org.team484.doge.commands.TotePickupJoystick;
 import org.team484.doge.commands.TotePickupStill;
@@ -57,5 +58,6 @@ public class OI {
 		armDown.whileHeld(new ArmDown());
 		
 		stacker.whileHeld(new Stacker());
+		stacker.whenReleased(new SetPickupSpeed(0.25));
 	}
 }
