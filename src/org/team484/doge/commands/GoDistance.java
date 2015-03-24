@@ -21,6 +21,7 @@ public class GoDistance extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
+		Robot.driveTrain.zeroEncoders();
 		Robot.driveTrain.setSetpoint(setpoint);
 		Robot.driveTrain.enable();
 		SmartDashboard.putBoolean("ReadPID", true);
