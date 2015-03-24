@@ -12,7 +12,7 @@ public class AutonomousCanEnd extends CommandGroup {
 		addSequential(new TotePickupStill(), 0.1);
 		addSequential(new ZeroGyro());
 		addSequential(new GoRotate(45), 5);
-		addSequential(new GoDistance(-104), 5);
+		addSequential(new GoDistance(-100), 5);
 		
 	}
 }

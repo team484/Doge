@@ -31,7 +31,7 @@ public class OI {
 	Button armUp = new JoystickButton(Robot.operatorStick, 11);
 	Button armDown = new JoystickButton(Robot.operatorStick, 10);
 	
-	Button stacker = new JoystickButton(Robot.driveStickLeft, 6);
+	Button stacker = new JoystickButton(Robot.driveStickLeft, 7);
 
 	public OI() { // Method used for giving buttons functions
 		totePickupJoystick.whileHeld(new TotePickupJoystick()); // When the
