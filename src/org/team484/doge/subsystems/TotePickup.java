@@ -21,7 +21,11 @@ public class TotePickup extends Subsystem {
 	}
 
 	public void totePickupStill() {
+		if (Robot.operatorStick.getTrigger()) {
 		Robot.totePickupMotor.set(0);
+		} else {
+			totePickupJoystick();
+		}
 	}
 	public boolean toteThere() {
 		if (RobotMap.getIRDistance(Robot.toteTopIR.getAverageVoltage()) < 3 || Robot.driveStickLeft.getRawButton(6)) {
