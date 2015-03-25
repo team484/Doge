@@ -49,7 +49,7 @@ public class ArmHeight extends PIDSubsystem {
 	}
 
 	public void armHeightJoystick() {
-		if (!Robot.operatorStick.getTrigger()) {
+		if (Robot.operatorStick.getTrigger()) {
 			setHeightMotor(Robot.operatorStick.getY());
 		} else {
 			setHeightMotor(0);

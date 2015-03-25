@@ -3,6 +3,7 @@ package org.team484.doge;
 import org.team484.doge.commands.ArmDown;
 import org.team484.doge.commands.ArmIn;
 import org.team484.doge.commands.ArmOut;
+import org.team484.doge.commands.ArmStill;
 import org.team484.doge.commands.ArmUp;
 import org.team484.doge.commands.SetPickupSpeed;
 import org.team484.doge.commands.Stacker;
@@ -34,13 +35,13 @@ public class OI {
 	Button stacker = new JoystickButton(Robot.driveStickLeft, 7);
 
 	public OI() { // Method used for giving buttons functions
-		totePickupJoystick.whileHeld(new TotePickupJoystick()); // When the
+		totePickupJoystick.whileHeld(new TotePickupStill()); // When the
 																// button is
 																// held, the
 																// tote pickup
 																// is joystick
 																// controlled
-		totePickupJoystick.whenReleased(new TotePickupStill()); // Once the
+		totePickupJoystick.whenReleased(new TotePickupJoystick()); // Once the
 																// button is
 																// released the
 																// pickup holds
@@ -58,6 +59,7 @@ public class OI {
 		armDown.whileHeld(new ArmDown());
 		
 		stacker.whileHeld(new Stacker());
+		stacker.whenReleased(new ArmStill());
 		stacker.whenReleased(new SetPickupSpeed(0.25));
 	}
 }

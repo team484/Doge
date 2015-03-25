@@ -56,7 +56,7 @@ public class Logging extends Subsystem {
 	}
 
 	public static void pushDashboard() {
-		
+		System.out.println("B: " + Robot.totePickup0High.get() + " T: " + Robot.totePickup1High.get());
 		//Robot.driveTrain.getPIDController().setPID(SmartDashboard.getNumber("kP", 0.0), SmartDashboard.getNumber("kI", 0.0), SmartDashboard.getNumber("kD", 0.0));
 		SmartDashboard.putNumber("current", Robot.driveTrain.setCurrentDistance());
 		SmartDashboard.putNumber("setpoint",Robot.driveTrain.getSetpoint());

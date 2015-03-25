@@ -2,6 +2,7 @@ package org.team484.doge.subsystems;
 
 import org.team484.doge.Robot;
 import org.team484.doge.RobotMap;
+import org.team484.doge.commands.TotePickupJoystick;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -16,6 +17,7 @@ public class TotePickup extends Subsystem {
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
+		setDefaultCommand(new TotePickupJoystick());
 	}
 
 	public void totePickupStill() {
