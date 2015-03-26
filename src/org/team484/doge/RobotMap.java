@@ -87,6 +87,8 @@ public class RobotMap {
 	public static int toteLeftIR = 2; // IR on the left of the bot
 	public static int toteRightIR = 3; // IR on the right of the bot
 	public static int toteTopIR = 6;
+	public static int totePickupTopSwitch = 9;
+	public static boolean totePickupTopSwitchDefault = false;
 
 	public static double totePickupDistance = 1.1; // Distance the tote is
 													// during pickup (Center IR)

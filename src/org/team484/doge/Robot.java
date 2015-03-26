@@ -95,6 +95,7 @@ public class Robot extends IterativeRobot {
 			RobotMap.totePickup1High);
 	public static final DigitalInput totePickup0High = new DigitalInput(
 			RobotMap.totePickup0High);
+	public static final DigitalInput totePickupTopSwitch = new DigitalInput(RobotMap.totePickupTopSwitch);
 
 	// ---Tote Pickup IR sensors----
 	public static final AnalogInput toteLeftIR = new AnalogInput(

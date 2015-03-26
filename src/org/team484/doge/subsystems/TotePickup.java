@@ -37,8 +37,8 @@ public class TotePickup extends Subsystem {
 	public void totePickupJoystick() {
 		if (Robot.totePickupBottom.get() != RobotMap.halleffectDefault
 				&& Robot.operatorStick.getY()
-						* RobotMap.operatorStickMultiplierY < 0) {
-			totePickupStill();
+						* RobotMap.operatorStickMultiplierY < 0 || (Robot.operatorStick.getY() * RobotMap.operatorStickMultiplierY > 0 && !goUp())) {
+			Robot.totePickupMotor.set(0);
 		} else {
 			Robot.totePickupMotor.set(Robot.operatorStick.getY()
 					* RobotMap.operatorStickMultiplierY);
@@ -46,8 +46,12 @@ public class TotePickup extends Subsystem {
 	}
 
 	public boolean toteToTop() {
+		if (goUp()) {
 		Robot.totePickupMotor.set(1 * RobotMap.winchSpeedMultiplier);
 		return false;
+		} else {
+			return true;
+		}
 	}
 
 	public boolean toteToBottom() {
@@ -63,7 +67,7 @@ public class TotePickup extends Subsystem {
 
 	public boolean toteUpTo0High() {
 		if (Robot.totePickup1High.get() == RobotMap.halleffectDefault
-				&& Robot.totePickup0High.get() == RobotMap.halleffectDefault) {
+				&& Robot.totePickup0High.get() == RobotMap.halleffectDefault && goUp()) {
 			Robot.totePickupMotor.set(1 * RobotMap.winchSpeedMultiplier);
 			return false;
 		} else {
@@ -84,7 +88,7 @@ public class TotePickup extends Subsystem {
 	}
 
 	public boolean toteUpTo1High() {
-		if (Robot.totePickup1High.get() == RobotMap.halleffectDefault) {
+		if (Robot.totePickup1High.get() == RobotMap.halleffectDefault && goUp()) {
 			Robot.totePickupMotor.set(1 * RobotMap.winchSpeedMultiplier);
 			return false;
 		} else {
@@ -103,5 +107,12 @@ public class TotePickup extends Subsystem {
 			Robot.totePickupMotor.set(0);
 			return true;
 		}
+	}
+	public boolean goUp() {
+		if (Robot.totePickupTopSwitch.get() == RobotMap.totePickupTopSwitchDefault) {
+			return true;
+	} else {
+		return false;
+	}
 	}
 }
