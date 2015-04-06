@@ -26,6 +26,8 @@ import org.team484.doge.commands.AutonomousCanCenter;
 import org.team484.doge.commands.AutonomousCanEnd;
 import org.team484.doge.commands.AutonomousDoNothing;
 import org.team484.doge.commands.AutonomousToAuto;
+import org.team484.doge.commands.AutonomousToteOnlySide;
+import org.team484.doge.commands.AutonomousToteSide;
 import org.team484.doge.commands.AutonomousTotes;
 import org.team484.doge.subsystems.ArmHeight;
 import org.team484.doge.subsystems.ArmLength;
@@ -50,7 +52,7 @@ public class Robot extends IterativeRobot {
 	public static final ArmHeight armHeight = new ArmHeight();
 	public static final org.team484.doge.subsystems.LEDs LEDSub = new org.team484.doge.subsystems.LEDs();
 	public static OI oi;
-	Command[] autonomousCommand = new Command[6];
+	Command[] autonomousCommand = new Command[8];
 	public static int selectedAutonomous = 0;
 	// ----------THE FOLLOWING SETUP ROBOT COMPONENTS TO BE ACCESSED BY THE
 	// CODE----------
@@ -136,6 +138,8 @@ public class Robot extends IterativeRobot {
 		autonomousCommand[3] = new AutonomousCanEnd();
 		autonomousCommand[4] = new AutonomousCanAndTote();
 		autonomousCommand[5] = new AutonomousCanCenter();
+		autonomousCommand[6] = new AutonomousToteSide();
+		autonomousCommand[7] = new AutonomousToteOnlySide();
 		try {
 			camera = CameraServer.getInstance();
 			camera.startAutomaticCapture("cam0");

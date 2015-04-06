@@ -10,6 +10,7 @@ public class AutonomousCanAndTote extends CommandGroup {
 	public AutonomousCanAndTote() {
 		addSequential(new ArmToAngle(120));
 		addSequential(new GoDistance(-120), 7);
+		addSequential(new ZeroGyro(), 0.1);
 		addSequential(new GoRotate(35));
 		addSequential(new GoDistance(-20), 7);
 		addSequential(new ArmToAngle(5), 7);
