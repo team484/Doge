@@ -39,30 +39,29 @@ public class DriveTrain extends PIDSubsystem {
 	}
 
 	public void justDrive(double speed) {
-		Robot.driveRobot.arcadeDrive(-speed, 0);
+		slideDrive(0,-speed, 0);
 	}
 
 	public void rotateSpeed(double rotate) {
-		Robot.driveRobot.arcadeDrive(0, rotate);
+		slideDrive(0,0, rotate);
 	}
 
 	public void driveJoysticks() {
 		double multiplier = 0.6;
-		if (!Robot.driveStickLeft.getTrigger()) {
-			multiplier = multiplier / 1.6;
-		}
-		if (Robot.driveStickLeft.getY() > 0.005) {
-			Robot.driveRobot.arcadeDrive(-Robot.driveStickLeft.getY()
-					* multiplier - 0.25, Robot.driveStickLeft.getX());
-		} else if (Robot.driveStickLeft.getY() < -0.005) {
-			Robot.driveRobot.arcadeDrive(-Robot.driveStickLeft.getY()
-					* multiplier + 0.25, Robot.driveStickLeft.getX());
-		} else {
-			Robot.driveRobot.arcadeDrive(0, Robot.driveStickLeft.getX());
+		double Y = Robot.driveStickLeft.getY();
+		if (Robot.driveStickLeft.getY() > 0.1) {
+			Y = 0.25 + Y;
+		} else if (Robot.driveStickLeft.getY() < -0.1) {
+			Y = Y - 0.25;
 		}
 		if (Robot.driveStickLeft.getTrigger()) {
-			Robot.leftEncoder.reset();
-			Robot.rightEncoder.reset();
+			if (Math.abs(Robot.driveStickLeft.getX()) > Math.abs(Robot.driveStickLeft.getY())) {
+				slideDrive(Robot.driveStickLeft.getX(),0, 0);
+			} else {
+				slideDrive(0, Y * multiplier, 0);
+			}
+		} else {
+			slideDrive(0, Y * multiplier, Robot.driveStickLeft.getX());
 		}
 	}
 
@@ -70,7 +69,7 @@ public class DriveTrain extends PIDSubsystem {
 		System.out.println(Robot.toteCenterIR.getAverageVoltage());
 		if (Robot.toteCenterIR.getAverageVoltage() < 2.15
 				& Robot.toteCenterIR.getAverageVoltage() > 0.2) {
-			Robot.driveRobot.arcadeDrive(RobotMap.driveToToteSpeed, 0.0);
+			slideDrive(0,RobotMap.driveToToteSpeed, 0.0);
 			return false;
 		} else {
 			Robot.driveRobot.arcadeDrive(0.0, 0.0);
@@ -123,5 +122,10 @@ public class DriveTrain extends PIDSubsystem {
 		Robot.gyroUp.reset();
 		Robot.gyroDown.reset();
 		return true;
+	}
+	public void slideDrive(double x,double y,double rot) {
+		Robot.driveRobot.arcadeDrive(-y, rot);
+		Robot.slideFront.set(x + rot * 2);
+		Robot.slideBack.set(-x+rot * 2);
 	}
 }

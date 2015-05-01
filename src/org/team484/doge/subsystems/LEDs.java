@@ -18,15 +18,14 @@ public class LEDs extends Subsystem {
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		//setDefaultCommand(new MySpecialCommand());
-		Robot.LEDs.setDirection(Direction.kForward);
 		setDefaultCommand(new RunLEDs());
 	}
 	public void run() {
-		if (Robot.ds.isFMSAttached()) {
+		if (!Robot.ds.isFMSAttached()) {
 			if (Robot.ds.isAutonomous()) {
-				solid();
+				pulse();
 			} else if (Robot.ds.isOperatorControl()) {
-				if (Robot.ds.getMatchTime() < 20 && Robot.ds.getMatchTime() > 0) {
+				if (Robot.ds.getMatchTime() < 30 && Robot.ds.getMatchTime() > 0) {
 					blink();
 					if (Robot.ds.getMatchTime() < 5) {
 						blink++;
@@ -40,21 +39,31 @@ public class LEDs extends Subsystem {
 		}
 	}
 	public void solid() {
-		Robot.LEDs.set(Value.kOn);
+		double multiplier = 2.7 - Robot.ds.getBatteryVoltage() / 6;
+		Robot.LEDs.set(multiplier);
 	}
 	public void blink() {
 		if (blink < 25) {
-			Robot.LEDs.set(Value.kOn);
+			Robot.LEDs.set(1);
 			blink++;
 		} else if (blink < 40) {
-			Robot.LEDs.set(Value.kOff);
+			Robot.LEDs.set(0);
 			blink++;
 		} else {
 			blink = 0;
 		}
 	}
 	public void off() {
-		Robot.LEDs.set(Value.kOff);
+		Robot.LEDs.set(0);
 	}
+    public void pulse() {
+    	if (pulse < 25) {
+    		pulse++;
+    	} else {
+    		pulse = -25;
+    	}
+    	Robot.LEDs.set(0.04*Math.abs(pulse));
+    	
+    }
 }
 

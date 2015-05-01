@@ -7,10 +7,12 @@ import org.team484.doge.commands.ArmStill;
 import org.team484.doge.commands.ArmUp;
 import org.team484.doge.commands.SetPickupSpeed;
 import org.team484.doge.commands.Stacker;
+import org.team484.doge.commands.ToteDownTo0High;
 import org.team484.doge.commands.TotePickupJoystick;
 import org.team484.doge.commands.TotePickupStill;
 import org.team484.doge.commands.ToteToBottom;
 import org.team484.doge.commands.ToteToTop;
+import org.team484.doge.commands.ToteUpTo1High;
 
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -46,11 +48,14 @@ public class OI {
 																// released the
 																// pickup holds
 																// position
-
-		toteToTop.whileHeld(new ToteToTop());
+		toteToTop.whenPressed(new SetPickupSpeed(1));
+		toteToTop.whenPressed(new ToteUpTo1High());
 		toteToTop.whenReleased(new TotePickupStill());
-
-		toteToBottom.whileHeld(new ToteToBottom());
+		toteToTop.whenReleased(new SetPickupSpeed(0.25));
+		
+		toteToBottom.whenPressed(new SetPickupSpeed(1));
+		toteToBottom.whenPressed(new ToteDownTo0High());
+		toteToBottom.whenReleased(new SetPickupSpeed(0.25));
 		toteToBottom.whenReleased(new TotePickupStill());
 
 		armExtend.whileHeld(new ArmOut());

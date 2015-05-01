@@ -25,9 +25,11 @@ import org.team484.doge.commands.AutonomousCanAndTote;
 import org.team484.doge.commands.AutonomousCanCenter;
 import org.team484.doge.commands.AutonomousCanEnd;
 import org.team484.doge.commands.AutonomousDoNothing;
+import org.team484.doge.commands.AutonomousFeeder;
 import org.team484.doge.commands.AutonomousToAuto;
 import org.team484.doge.commands.AutonomousToteOnlySide;
 import org.team484.doge.commands.AutonomousToteSide;
+import org.team484.doge.commands.AutonomousToteSide2;
 import org.team484.doge.commands.AutonomousTotes;
 import org.team484.doge.subsystems.ArmHeight;
 import org.team484.doge.subsystems.ArmLength;
@@ -52,7 +54,7 @@ public class Robot extends IterativeRobot {
 	public static final ArmHeight armHeight = new ArmHeight();
 	public static final org.team484.doge.subsystems.LEDs LEDSub = new org.team484.doge.subsystems.LEDs();
 	public static OI oi;
-	Command[] autonomousCommand = new Command[8];
+	Command[] autonomousCommand = new Command[10];
 	public static int selectedAutonomous = 0;
 	// ----------THE FOLLOWING SETUP ROBOT COMPONENTS TO BE ACCESSED BY THE
 	// CODE----------
@@ -63,7 +65,7 @@ public class Robot extends IterativeRobot {
 			RobotMap.operatorStick);
 
 	//-------------LEDS-------------
-	public static final Relay LEDs = new Relay(RobotMap.ledVictor);
+	public static final VictorSP LEDs = new VictorSP(RobotMap.ledVictor);
 	// ------------Gyros------------
 	public static final Gyro gyroUp = new Gyro(RobotMap.gyroUp);
 	public static final Gyro gyroDown = new Gyro(RobotMap.gyroDown);
@@ -77,6 +79,8 @@ public class Robot extends IterativeRobot {
 			RobotMap.rearRightMotor);
 	public static final Jaguar totePickupMotor = new Jaguar(
 			RobotMap.totePickupMotor);
+	public static final VictorSP slideFront = new VictorSP(RobotMap.frontSlide);
+	public static final VictorSP slideBack = new VictorSP(RobotMap.rearSlide);
 
 	// ----------RobotDrive---------
 	public static final RobotDrive driveRobot = new RobotDrive(frontLeftMotor,
@@ -140,6 +144,8 @@ public class Robot extends IterativeRobot {
 		autonomousCommand[5] = new AutonomousCanCenter();
 		autonomousCommand[6] = new AutonomousToteSide();
 		autonomousCommand[7] = new AutonomousToteOnlySide();
+		autonomousCommand[8] = new AutonomousToteSide2();
+		autonomousCommand[9] = new AutonomousFeeder();
 		try {
 			camera = CameraServer.getInstance();
 			camera.startAutomaticCapture("cam0");
@@ -183,6 +189,7 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		if (autonomousCommand[selectedAutonomous] != null)
 			autonomousCommand[selectedAutonomous].cancel();
+		RobotMap.winchSpeedMultiplier = 0.25;
 	}
 
 	/**

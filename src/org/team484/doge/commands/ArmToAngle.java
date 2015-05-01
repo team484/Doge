@@ -29,7 +29,7 @@ public class ArmToAngle extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		if (Robot.armHeight.onTarget() || Math.abs(Robot.armPot.get() - setpoint) < 2) {
+		if (Robot.armHeight.onTarget() || (Math.abs(Robot.armPot.get() - setpoint) < 3.0)) {
 			return true;
 		}else {
 			return false;

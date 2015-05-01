@@ -10,7 +10,7 @@ public class AutonomousCanCenter extends CommandGroup {
 
 	public AutonomousCanCenter() {
 		addSequential(new ArmDown(), 1);
-		addSequential(new ArmToAngle(104), 3.5);
+		addSequential(new ArmToAngle(104), 2.7);
 		addSequential(new ArmOut(), 3);
 		addSequential(new WaitCommand(0.2),0.2);
 		addSequential(new ArmUp(), 0.85);
@@ -19,9 +19,9 @@ public class AutonomousCanCenter extends CommandGroup {
 		addSequential(new ArmToAngle(8), 6);
 		addSequential(new WaitCommand(0.5),0.5);
 		addSequential(new ZeroGyro(), 0.1);
-		addSequential(new GoRotate(-90),3);
+		addSequential(new GoRotate(-90),2.5);
 		addSequential(new WaitCommand(0.5), 0.5);
-		addSequential(new GoDistance(44),4);
+		addSequential(new GoDistance(47),4);
 		/*addSequential(new ArmDown(), 1);
 		addSequential(new ArmToAngle(105), 4);
 		addSequential(new ArmOut(), 3);

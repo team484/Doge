@@ -21,7 +21,7 @@ public class RobotMap {
 										// 2 is verbose logging
 	
 	//-------------LEDS----------------
-	public static int ledVictor = 0;
+	public static int ledVictor = 9;
 	// ----------Drive Motors----------
 	public static int frontLeftMotor = 0; // Talon that controls front left
 											// motor
@@ -30,6 +30,8 @@ public class RobotMap {
 											// motor
 	public static int rearRightMotor = 3; // Talon that controls back right
 											// motor
+	public static int frontSlide = 7;
+	public static int rearSlide = 8;
 
 	// -------Autonomous-------
 	public static double moveValueMultiplier = 0.5; // For autonomous motion
