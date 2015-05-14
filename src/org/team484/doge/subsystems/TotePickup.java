@@ -36,6 +36,9 @@ public class TotePickup extends Subsystem {
 	}
 	public void totePickupJoystick() {
 		RobotMap.winchSpeedMultiplier = 0.25;
+		if (Math.abs(Robot.operatorStick.getY()) < 0.05) {
+			Robot.totePickupMotor.set(0);
+		} else {
 		if (Robot.totePickupBottom.get() != RobotMap.halleffectDefault
 				&& Robot.operatorStick.getY()
 						* RobotMap.operatorStickMultiplierY < 0 || (Robot.operatorStick.getY() * RobotMap.operatorStickMultiplierY > 0 && !goUp())) {
@@ -43,6 +46,7 @@ public class TotePickup extends Subsystem {
 		} else {
 			Robot.totePickupMotor.set(Robot.operatorStick.getY()
 					* RobotMap.operatorStickMultiplierY);
+		}
 		}
 	}
 

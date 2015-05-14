@@ -23,7 +23,7 @@ public class GoRotate extends Command {
 			}
 		}, new PIDOutput() {
 			public void pidWrite(double d) {
-				Robot.driveTrain.rotateSpeed(d * 1.5);
+				Robot.driveTrain.rotateSpeed(d * 0.8);
 			}
 		});
 		pid.setAbsoluteTolerance(.01);
@@ -66,7 +66,7 @@ public class GoRotate extends Command {
 	protected void end() {
 		pid.disable();
 		Robot.driveTrain.rotateSpeed(0);
-		Robot.driveTrain.driveJoysticks();
+		Robot.driveTrain.driveJoysticks(0);
 	}
 
 	// Called when another command which requires one or more of the same

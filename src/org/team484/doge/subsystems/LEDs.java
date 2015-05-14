@@ -21,7 +21,7 @@ public class LEDs extends Subsystem {
 		setDefaultCommand(new RunLEDs());
 	}
 	public void run() {
-		if (!Robot.ds.isFMSAttached()) {
+		if (Robot.ds.isFMSAttached()) {
 			if (Robot.ds.isAutonomous()) {
 				pulse();
 			} else if (Robot.ds.isOperatorControl()) {
@@ -44,7 +44,7 @@ public class LEDs extends Subsystem {
 	}
 	public void blink() {
 		if (blink < 25) {
-			Robot.LEDs.set(1);
+			solid();
 			blink++;
 		} else if (blink < 40) {
 			Robot.LEDs.set(0);

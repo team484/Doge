@@ -12,7 +12,14 @@ public class DriveTrain extends PIDSubsystem {
 	private static double Kp = 0.2; // PID values for GoDistance
 	private static double Ki = -0.05;
 	private static double Kd = 0.7;
-
+	boolean wasTrigger = false;
+	public double output = 0.0;
+	public void recordOutput(double output) {
+		this.output = output;
+	}
+	public double getOutput() {
+		return this.output;
+	}
 	public DriveTrain() {
 		super(Kp, Ki, Kd); // sends PID values above to controller
 	}
@@ -46,22 +53,28 @@ public class DriveTrain extends PIDSubsystem {
 		slideDrive(0,0, rotate);
 	}
 
-	public void driveJoysticks() {
-		double multiplier = 0.6;
+	public void driveJoysticks(double input) {
+		double multiplier = 0.7;
 		double Y = Robot.driveStickLeft.getY();
 		if (Robot.driveStickLeft.getY() > 0.1) {
-			Y = 0.25 + Y;
+			Y = 0.29 + Y;
 		} else if (Robot.driveStickLeft.getY() < -0.1) {
-			Y = Y - 0.25;
+			Y = Y - 0.29;
 		}
 		if (Robot.driveStickLeft.getTrigger()) {
+			if (!wasTrigger) {
+				Robot.gyroUp.reset();
+				Robot.gyroDown.reset();
+			}
+			wasTrigger = true;
 			if (Math.abs(Robot.driveStickLeft.getX()) > Math.abs(Robot.driveStickLeft.getY())) {
-				slideDrive(Robot.driveStickLeft.getX(),0, 0);
+				slideDrive(Robot.driveStickLeft.getX(),0, input);
 			} else {
-				slideDrive(0, Y * multiplier, 0);
+				slideDrive(0, Y * multiplier, input);
 			}
 		} else {
 			slideDrive(0, Y * multiplier, Robot.driveStickLeft.getX());
+			wasTrigger = false;
 		}
 	}
 

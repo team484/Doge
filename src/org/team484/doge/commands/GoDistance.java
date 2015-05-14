@@ -48,7 +48,7 @@ public class GoDistance extends Command {
 	// Called once after isFinished returns true
 	protected void end() {
 		Robot.driveTrain.disable();
-		Robot.driveTrain.driveJoysticks();
+		Robot.driveTrain.driveJoysticks(0);
 		SmartDashboard.putBoolean("ReadPID", false);
 	}
 
