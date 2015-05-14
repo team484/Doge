@@ -17,13 +17,13 @@ public class DriveJoysticks extends Command {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		requires(Robot.driveTrain);
-		pid = new PIDController(0.3, -0.15, 0.55, new PIDSource() {
+		pid = new PIDController(0.25, -0.15, 0.55, new PIDSource() {
 			public double pidGet() {
 				return Robot.driveTrain.gyroAngle();
 			}
 		}, new PIDOutput() {
 			public void pidWrite(double d) {
-				Robot.driveTrain.recordOutput(d * 0.35);
+				Robot.driveTrain.recordOutput(d * 0.25);
 			}
 		});
 		pid.setAbsoluteTolerance(.01);
