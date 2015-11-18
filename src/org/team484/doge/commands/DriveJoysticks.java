@@ -23,7 +23,7 @@ public class DriveJoysticks extends Command {
 			}
 		}, new PIDOutput() {
 			public void pidWrite(double d) {
-				Robot.driveTrain.recordOutput(d * 0.25);
+				Robot.driveTrain.recordOutput(d * 0.22);
 			}
 		});
 		pid.setAbsoluteTolerance(.01);

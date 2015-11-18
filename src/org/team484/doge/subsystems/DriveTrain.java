@@ -31,7 +31,7 @@ public class DriveTrain extends PIDSubsystem {
 
 	protected void usePIDOutput(double output) {
 		// Sets PID output to motors
-		Robot.driveRobot.arcadeDrive(output, 0);
+		Robot.driveRobot.arcadeDrive(output * 1.1, 0);
 	}
 
 	double driveDistance = 0;
@@ -73,7 +73,7 @@ public class DriveTrain extends PIDSubsystem {
 				slideDrive(0, Y * multiplier, input);
 			}
 		} else {
-			slideDrive(0, Y * multiplier, Robot.driveStickLeft.getX());
+			slideDrive(0, Y * multiplier, Robot.driveStickLeft.getX() / 2.2);
 			wasTrigger = false;
 		}
 	}
